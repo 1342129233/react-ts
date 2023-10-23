@@ -47,8 +47,8 @@ function ProductSort() {
 	}
 	// 编辑
 	const handleEdit = (id: number) => {
-		productCatRef.current?.isOpen();
 		setProductCateId(id);
+		productCatRef.current?.isOpen();
 	}
 	const create = () => {
 		setProductCateId(null)

@@ -29,7 +29,7 @@ const ProductManagementList = lazy(() => import("@/view/product-management/produ
 const ProductUpdate = lazy(() => import("@/view/product-management/product-update/index"))
 const ProductSort = lazy(() => import("@/view/product-management/product-sort/index"))
 const ProductAttr = lazy(() => import("@/view/product-management/product-attr/index"))
-const ProductAttrList = lazy(() => import("@/view/product-management/product-attr-list/index"))
+const ProductAttrList = lazy(() => import("@/view/product-management/product-attr/components/product-attr-list/index"))
 
 
 const OrderList = lazy(() => import("@/view/order-module/order-list/index"))

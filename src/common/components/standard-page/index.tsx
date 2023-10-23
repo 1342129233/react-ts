@@ -21,10 +21,6 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 	// 处理请求数据
 	const [searchParams, setSearchParams] = useState<Record<string, unknown>>({});
 	const searchParamsRef = useRef();
-	// 报错信息
-	const [messageApi, contextHolder] = message.useMessage();
-	
-
 	// 发送请求
 	const submit = async () => {
 		try {
@@ -39,11 +35,8 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 				}
 			});
 			setTotal(res.data.total)
-		} catch(error) {
-			messageApi.open({
-				type: 'error',
-				content: 'This is an error message',
-			})
+		} catch(error: any) {
+			message.error(error?.message || '请求失败')
 		}
 	}
 	// 搜索请求

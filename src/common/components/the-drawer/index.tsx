@@ -24,7 +24,7 @@ function TheDrawer(props: Props) {
 		onOpenClose(false)
 	};
 	const save = () => {
-		onSave();
+		onSave ? onSave() : null;
 	}
 	// 取消 
 	const cancel = () => {
@@ -95,7 +95,7 @@ interface Props {
 	showFooter?: any;
 	theDrawerStyle?: Record<string, unknown>,
 	onOpenClose: (value: boolean) => void;
-	onSave: () => void
+	onSave?: () => void
 	children: any
 	cancelText?: string;
 	saveText?: string;

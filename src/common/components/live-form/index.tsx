@@ -1,11 +1,17 @@
 import React, { useEffect, useImperativeHandle, Ref, useRef, forwardRef, useState } from 'react';
-import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col } from 'antd';
+import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col, Radio } from 'antd';
 import type { FormInstance } from 'antd/es/form';
 import styles from './css/index.module.less';
 
 const { TextArea } = Input;
 
+interface OptionsType {
+	value: number;
+	label: string;
+}
+
 function LiveForm(props: any, ref: Ref<unknown>) {
+	const { inlineOperate = false } = props;
 	const [form] = Form.useForm();
 	const formRef = useRef<FormInstance>(null);
 	useImperativeHandle(ref, () => {
@@ -34,7 +40,7 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 			return <Input allowClear />
 		}
 		if(item.tag === 'textArea') {
-			return <TextArea rows={4} />
+			return <TextArea rows={4} style={{ whiteSpace: 'pre-line'}} />
 		}
 		if(item.tag === 'switch') {
 			const switchChange = (value: boolean) => {
@@ -102,6 +108,16 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 				/>
 			)
 		}
+		if(item.tag === 'radio') {
+			const selectOptions = item.search?.options || [];
+			return <Radio.Group>
+				{
+					selectOptions.map((item: OptionsType) => (
+						<Radio value={item.value} key={item.value}>{item.label}</Radio>
+					))
+				}
+			</Radio.Group>
+		}
 		return <></>
 	}
 	const onFinish = (values: any) => {
@@ -129,7 +145,7 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 				...list
 			})
 		}
-	}, [props.config])
+	}, [props.dataInfo])
 	  
 	return (
 		<div>
@@ -168,9 +184,9 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 				{ props?.children }
 				<Form.Item wrapperCol={{ offset: 8, span: 16 }} className={styles.footer}>
 					{
-						props.inlineOperate
+						inlineOperate
 						? 
-						props.inlineOperate
+						inlineOperate
 						:
 						<>
 							<Button type="primary" htmlType="submit" className={styles.button}>
@@ -189,7 +205,7 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 
 interface Props {
 	config: any,
-	inlineOperate: any,
+	inlineOperate?: any,
 	dataInfo?: any,
 	children?: any
 }

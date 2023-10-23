@@ -20,7 +20,7 @@ export interface ProductAttributeCategoryResolve {
 }
 
 
-export const productAttributeCategory = () => {
-    return get<ProductAttributeCategoryResolve>(`/api/productAttribute/category/list?pageNum=1&pageSize=100`);
+export const productAttributeCategory = (pageNum: number = 1, pageSize: number = 100) => {
+    return get<ProductAttributeCategoryResolve>(`/api/productAttribute/category/list?pageNum=${pageNum}&pageSize=${pageSize}`);
 }
 

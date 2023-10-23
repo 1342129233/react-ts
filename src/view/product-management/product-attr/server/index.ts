@@ -1,10 +1,14 @@
 import { get, post, Response } from '@/common/axios';
+import { productAttributeCategory } from '@/common/public-fetch/productAttributeCategory';
 import { ProductAttrResolve } from '../types';
 
+// 获取列表
 export function getProductAttrList(pageNum: number, pageSize: number ) {
-    return get<ProductAttrResolve>(`/api/productAttribute/category/list?pageNum=${pageNum}&pageSize=${pageSize}`);
+    return productAttributeCategory(pageNum, pageSize)
+    // return get<ProductAttrResolve>(`/api/productAttribute/category/list?pageNum=${pageNum}&pageSize=${pageSize}`);
 }
 
+// 更新
 export function updateProductAttrList(id: number, params: { name: string }) {
     const formData = new window.FormData();
     formData.append('name', params.name);
@@ -13,6 +17,7 @@ export function updateProductAttrList(id: number, params: { name: string }) {
     } });
 }
 
+// 创建新数据
 export function createProductAttrList(params: { name: string }) {
     const formData = new window.FormData();
     formData.append('name', params.name);
@@ -21,3 +26,7 @@ export function createProductAttrList(params: { name: string }) {
     } });
 }
 
+// 删除这条数据
+export function delProductAttrList(id: number) {
+    return get<Response>(`/api/productCategory/delete/${id}`);
+}

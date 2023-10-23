@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Table, Button, Popconfirm } from 'antd';
+import { Table, Button, Popconfirm, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import ProductAttrEdit from './components/product-attr-edit/index';
-import { getProductAttrList } from './server';
+import { getProductAttrList, delProductAttrList } from './server';
 import { DataType, PageType } from './types';
 import styles from './style/index.module.less';
 
@@ -97,13 +97,21 @@ function ProductAttr() {
 		setOpen(true);
 	}
 	// 删除
-	const handleDelete = (id: number) => {}
+	const handleDelete = async (id: number) => {
+		try {
+			await delProductAttrList(id);
+		} catch(error: any) {
+			message.error(error?.message || '删除失败');
+		}
+	}
 	// 属性列表
 	const statsList = (_: DataType) => {
 		navigate(`/product-management/product-attr-list?cid=${_.id}&cname=${_.name}&type=0`);
 	}
 	// 参数列表
-	const argumentList = (_: DataType) => {}
+	const argumentList = (_: DataType) => {
+		navigate(`/product-management/product-attr-list?cid=${_.id}&cname=${_.name}&type=1`);
+	}
 	// 新增
 	const create = () => {
 		setId(0);
@@ -124,8 +132,8 @@ function ProductAttr() {
 				pageSize: res.data.pageSize,
 				total: res.data.total,
 			}))
-		} catch(error) {
-			console.log('error', error);
+		} catch(error: any) {
+			message.error(error?.message || '请求失败')
 		}
 	}
 	useEffect(() => {

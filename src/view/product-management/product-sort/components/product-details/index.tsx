@@ -180,7 +180,7 @@ function ProductCate(props: Props, ref: Ref<unknown>) {
 		return () => {
 			id = null
 		}
-		
+
 	}, [id])
 	const uploadButton = (
 		<div>
@@ -191,7 +191,7 @@ function ProductCate(props: Props, ref: Ref<unknown>) {
 	return (
 		<>
 			<TheDrawer
-				title="商品"
+				title="商品详情"
 				open={openDrawer}
 				onOpenClose={(value) => setOpenDrawer(value)}
 				onSave={() => onSubmit()}
