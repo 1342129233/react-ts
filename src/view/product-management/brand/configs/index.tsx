@@ -1,13 +1,25 @@
 
-import  { Space, Button } from 'antd';
+import  { Space, Button, Switch, message } from 'antd';
 import { EffectJsonFormConfig } from '@/common/components/live-search/types/index';
-import { getBrandList } from '../server';
+import { getBrandList, isShowStatus, isFactoryStatus } from '../server';
 import { DataType } from '../type';
 
+export enum StatusEnum{
+    NO = '0',
+    YES = '1'
+}
 
+export const StatusToBoolean: { [key: string]: boolean } = {
+    [StatusEnum.NO]: false,
+    [StatusEnum.YES]: true,
+}
+export const StatusToNUmber: { [key: string]: number } = {
+    false: 0,
+    true: 1,
+}
 
 export function Search(props: any) {
-    const { handleEdit, handleDelete } = props;
+    const { handleEdit, handleDelete, standardPageRef } = props;
     const config = {
         row: [
             {
@@ -21,7 +33,6 @@ export function Search(props: any) {
             },
             {
                 key: 'id',
-                value: '',
                 label: 'ID',
                 table: {
                     width: 100
@@ -29,7 +40,6 @@ export function Search(props: any) {
             },
             {
                 key: 'name',
-                value: '',
                 label: '品牌名称',
                 table: {
                     width: 100
@@ -37,7 +47,6 @@ export function Search(props: any) {
             },
             {
                 key: 'firstLetter',
-                value: '',
                 label: '品牌首字母',
                 table: {
                     width: 100
@@ -46,7 +55,6 @@ export function Search(props: any) {
             
             {
                 key: 'sort',
-                value: '',
                 label: '排序',
                 table: {
                     width: 100,
@@ -54,23 +62,64 @@ export function Search(props: any) {
             },
             {
                 key: 'factoryStatus',
-                value: '',
                 label: '品牌制造商',
                 table: {
-                    width: 100
+                    render: (_: DataType, record: DataType) => {
+                        const handleShowStatusChange = async (checked: boolean) => {
+                            const params = {
+                                ids: String(record.id),
+                                factoryStatus: String(StatusToNUmber[String(checked)])
+                            }
+
+                            try {
+                                // 请求接口
+                                await isFactoryStatus(params);
+                            } catch(error: any) {
+                                message.error(error?.message || '删除失败')
+                            }
+                            // 从新请求
+                            await standardPageRef.current?.select()
+                        }
+                        
+                        return <Switch 
+                            key={record.factoryStatus}
+                            defaultChecked={StatusToBoolean[String(record.factoryStatus)]}
+                            onChange={(checked)=>handleShowStatusChange(checked)}
+                        />
+                    }
                 }
             },
             {
                 key: 'showStatus',
-                value: '',
-                label: '是否显示',
+                label: "是否显示",
                 table: {
-                    width: 100
+                    render: (_: DataType, record: DataType) => {
+                        const handleShowStatusChange = async (checked: boolean) => {
+                            const params = {
+                                ids: String(record.id),
+                                showStatus: String(StatusToNUmber[String(checked)])
+                            }
+
+                            try {
+                                // 请求接口
+                                await isShowStatus(params);
+                            } catch(error: any) {
+                                message.error(error?.message || '删除失败')
+                            }
+                            // 从新请求
+                            await standardPageRef.current?.select()
+                        }
+                        
+                        return <Switch 
+                            key={record.showStatus}
+                            defaultChecked={StatusToBoolean[String(record.showStatus)]}
+                            onChange={(checked)=>handleShowStatusChange(checked)}
+                        />
+                    }
                 }
             },
             {
                 key: 'productCount',
-                value: '',
                 label: '商品数量',
                 table: {
                     width: 100
@@ -78,7 +127,6 @@ export function Search(props: any) {
             },
             {
                 key: 'productCommentCount',
-                value: '',
                 label: '评论数量',
                 table: {
                     width: 100
@@ -86,7 +134,6 @@ export function Search(props: any) {
             },
             {
                 key: 'operation',
-                value: '',
                 label: ' 操作',
                 table: {
                     width: 100,

@@ -7,6 +7,7 @@ import { Search } from './configs';
 import { DataType } from './type';
 
 function Brand() {
+	const standardPageRef = useRef<HTMLDivElement & { select: Function }>();
 	const [id, setId] = useState(0);
 	const brandListtRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
 	const handleEdit = (_: DataType) => {
@@ -22,8 +23,8 @@ function Brand() {
 			message.error(error?.message || '删除失败')
 		}
     }
-	const { config } = Search({ handleEdit, handleDelete });
-	const standardPageRef = useRef<HTMLDivElement & { select: Function }>();
+	const { config } = Search({ handleEdit, handleDelete, standardPageRef });
+
 	// 新增
 	const add = () => {
 		setId(0)

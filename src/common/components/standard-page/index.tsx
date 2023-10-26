@@ -24,8 +24,8 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 	const submit = async () => {
 		try {
 			const res = await props.config.fetchConfig(searchParamsRef.current);
-			data = res.data.list
-;			setData([...data]);
+			data = res.data.list;
+			setData([...data]);
 			setPagination((prev) => {
 				return {
 					...prev,
@@ -56,7 +56,6 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 			...list
 		});
 		submit();
-		
 	}
 
 	// 分页请求

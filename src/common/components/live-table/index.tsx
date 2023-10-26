@@ -122,7 +122,7 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 				dataSource={dataSource} 
 				style={{ width: '100%', overflowX: 'auto' }}
 				pagination={false}
-				rowKey={(record: any) => record.id}
+				rowKey={(record: any) => record.id + Date.now()}
 			>
 			</Table>
 		</div>
