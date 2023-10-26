@@ -1,4 +1,4 @@
-import React, { useRef, forwardRef, Ref, useState, useEffect, useCallback, useImperativeHandle } from 'react';
+import React, { ReactNode, useRef, forwardRef, Ref, useState, useEffect, useCallback, useImperativeHandle } from 'react';
 import { message, Space, Button, Switch } from 'antd';
 import LiveSearch from '@/common/components/live-search/index';
 import LiveTable from '@/common/components/live-table/index';
@@ -16,8 +16,7 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 		pageNum: props.paginationConfig?.pageNum || 1,
 		pageSize: props.paginationConfig?.pageSize || 10
 	});
-		pageSize: props.paginationConfig?.pageSize || 10
-		const [total, setTotal] = useState(props.paginationConfig?.total || 0);
+	const [total, setTotal] = useState(props.paginationConfig?.total || 0);
 	// 处理请求数据
 	const [searchParams, setSearchParams] = useState<Record<string, unknown>>({});
 	const searchParamsRef = useRef();
@@ -103,6 +102,7 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 				data={data}
 				pagination={pagination}
 				liveTableRender={props.liveTableRender || {}}
+				tableLeftButton={props?.tableLeftButton}
 			>
 			</LiveTable>
 			<LivePagination { ...pagination } total={total} pageSizeOptions={props.paginationConfig?.pageSizeOptions} onUpdate={handleChildUpdate}></LivePagination>
@@ -115,11 +115,12 @@ interface Props {
 		row: Array<EffectJsonFormConfig>,
 		fetchConfig: Function
 	},
-	paginationConfig?: PaginationType,
-	onPreAdd?: () => void,
-	isPreAdd?: boolean,
-	operation?: any
-	liveTableRender?: any
+	paginationConfig?: PaginationType;
+	onPreAdd?: () => void;
+	isPreAdd?: boolean;
+	operation?: any;
+	liveTableRender?: any;
+	tableLeftButton?: JSX.Element;
 }
 
 

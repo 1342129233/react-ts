@@ -17,16 +17,18 @@ export type JsonFormConfig = {
         loading: boolean
     }
     format?: string;
-    placeholder: string;
+    placeholder?: string;
     search?: {
         type: string;
         options?: Array<SelectOptions>;
-        clearable?: boolean
+        clearable?: boolean,
+        placeholder?: string;
     },
-    table: {
+    table?: {
         width: number;
         fixed?: string;
         render?: any
+        label?: string;
     }
 }
 

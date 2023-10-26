@@ -20,7 +20,7 @@ import {
     NotificationOutlined,
     AppstoreAddOutlined,
     PlusSquareOutlined,
-    CalendarOutlined
+    CalendarOutlined,
 } from '@ant-design/icons';
 import { RouterType } from './type';
 
@@ -30,6 +30,7 @@ const ProductUpdate = lazy(() => import("@/view/product-management/product-updat
 const ProductSort = lazy(() => import("@/view/product-management/product-sort/index"))
 const ProductAttr = lazy(() => import("@/view/product-management/product-attr/index"))
 const ProductAttrList = lazy(() => import("@/view/product-management/product-attr/components/product-attr-list/index"))
+const Brand = lazy(() => import("@/view/product-management/brand/index")) // 品牌
 
 
 const OrderList = lazy(() => import("@/view/order-module/order-list/index"))
@@ -106,7 +107,8 @@ const router: RouterType[] = [
                 element: <ProductSort />,
                 meta: {
                     path: ['产品管理', '商品分类']
-                }
+                },
+                
             },
             {
                 path: '/product-management/product-attr',
@@ -126,10 +128,19 @@ const router: RouterType[] = [
                 element: <ProductAttrList />,
                 meta: {
                     invisible: true,
-                    path: ['产品管理', '商品属性列表']
+                    path: ['产品管理', '商品属性']
                 }
             },
-            
+            {
+                path: '/product-management/brand',
+                label: '商品属性列表',
+                key: '/product-management/brand',
+                icon: <TagOutlined />,
+                element: <Brand />,
+                meta: {
+                    path: ['产品管理', '品牌管理']
+                }
+            },
         ],
         meta: {
             path: ['产品管理']

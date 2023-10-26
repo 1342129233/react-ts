@@ -1,5 +1,6 @@
 import React, { useEffect, useImperativeHandle, Ref, useRef, forwardRef, useState } from 'react';
-import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col, Radio } from 'antd';
+import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col, Radio, Upload } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { FormInstance } from 'antd/es/form';
 import styles from './css/index.module.less';
 
@@ -23,7 +24,7 @@ function LiveForm(props: any, ref: Ref<unknown>) {
         }
     });
 	const infoValue = (key: string, value: any) => {
-		props.dataInfo[key] = [...value]
+		props.dataInfo[key] = value
 		form.setFieldsValue({
 			...props.dataInfo
 		})

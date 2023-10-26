@@ -26,9 +26,7 @@ const ProductList = () => {
 	})
 	// 处理请求数据
 	const [searchParams, setSearchParams] = useState<Record<string, unknown>>({});
-	const [messageApi, contextHolder] = message.useMessage();
 
-	
 	// 发送请求
 	const submit = async() => {
 		try {
@@ -39,8 +37,8 @@ const ProductList = () => {
 				pageNum: res.data.pageNum,
 				pageSize: res.data.pageSize
 			});
-		} catch(error) {
-			console.log('error', error);
+		} catch(error: any) {
+			message.error(error?.message || '请求失败')
 		}
 	}
 
@@ -83,12 +81,12 @@ const ProductList = () => {
 			await updatePublishStatus(params);
 			standardPageRef.current?.select()
 		} catch(error: any) {
-			messageApi.error(error.message)
+			message.error(error.message || '请求失败')
 		}
 	}
 	// 删除
 	const handleDelete = async (check: boolean, record: any, index: number) => {
-		messageApi.error('演示环境暂无修改权限，如需修改数据可本地搭建后台服务！')
+		message.error('演示环境暂无修改权限，如需修改数据可本地搭建后台服务！')
 	}
 	
 	const handleEdit = (check: boolean, record: any, index: number) => {
@@ -127,7 +125,6 @@ const ProductList = () => {
 
 	return (
 		<div>
-			{contextHolder}
 			{/* <LiveSearch
 				ref={liveSeachRef}
 				config={Config}

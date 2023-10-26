@@ -16,7 +16,8 @@ const instance = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
-        'Authorization': localStorage.getItem('token')
+        'Authorization': localStorage.getItem('token'),
+        "pa-gateway-token": "6c37163d-3473-4795-86ea-427ec49d1199"
     }
 });
 

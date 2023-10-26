@@ -1,19 +1,18 @@
-import React, { forwardRef, MutableRefObject, useEffect, Ref, useState, useRef } from 'react';
+import React, { ReactNode, forwardRef, MutableRefObject, useEffect, Ref, useState, useRef } from 'react';
 import { Table, Affix, Button, Popover, Checkbox, Space, Pagination } from 'antd';
 import type { PaginationProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { EffectJsonFormConfig, JsonFormConfig } from '@/common/components/live-search/types';
-import LivePagination from '@/common/components/live-pagination/index';
 import { PaginationType } from '@/common/components/live-pagination/types';
-import styleClass from './css/index.module.css';
+import styles from './css/index.module.less';
 	
 interface Optopns {
 	value: string | number;
 	label: string;
 }
 
-
+// React.FC<React.PropsWithChildren<Props>>
 const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	const [columns, setColumns] = useState<ColumnsType<Object>>([]);
 	const [options, setOptions] = useState<Optopns[]>([]);
@@ -27,46 +26,34 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	});
 
 	useEffect(() => {
+		const columnList: ColumnsType<Object> = [];
 		const liveTableRender = props.liveTableRender || {}
 		props.config.forEach((item: EffectJsonFormConfig) => {
-			columns.push({
-				title: item.label,
-				width: item.table.width,
-				dataIndex: item.key,
-				key: item.key,
-				render: item.table.render || liveTableRender[item.key] || undefined
-			});
+			if(item.table) {
+				columnList.push({
+					title: item.table?.label || item.label,
+					width: item?.table?.width,
+					dataIndex: item.key,
+					key: item.key,
+					align: 'center',
+					render: item?.table?.render || liveTableRender[item.key] || undefined
+				});
+				options.push({
+					value: item.key,
+					label: item.label
+				})
+			}
 			
-			// options
-			options.push({
-				value: item.key,
-				label: item.label
-			})
 			setOptions([
 				...options
 			])
 			checkboxValue.push(item.key);
 		});
-		let list:any = {
-			title: '操作',
-			width: 100,
-			dataIndex: 'operation',
-			key: 'operation',
-			render: undefined
-		};
-		if(props.operation) {
-			list = {
-				title: props.operation.label,
-				width: props.operation.table.width,
-				dataIndex: props.operation.key,
-				key: props.operation.key,
-				render: props.operation.table?.render
-			}
-		}
+		
 		setColumns([
-			...columns,
-			list
+			...columnList
 		])
+		
 	}, []);
 
 	useEffect(() => {
@@ -120,12 +107,15 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	
 	return (
 		<div className="mgt10">
-			<div style={{ float: 'right', marginRight: 0 }} className='mgb10'>
-				<Affix offsetTop={10}>
-					<Popover placement="right" title={'修改表格展示内容'} content={content} trigger="click">
-						<Button type="primary">修改列表展示</Button>
-					</Popover>
-				</Affix>
+			<div className={styles.tableTop} >
+				<div>{props.tableLeftButton}</div>
+				<div className='mgb10'>
+					<Affix offsetTop={10}>
+						<Popover placement="right" title={'修改表格展示内容'} content={content} trigger="click">
+							<Button type="primary">修改列表展示</Button>
+						</Popover>
+					</Affix>
+				</div>
 			</div>
 			<Table 
 				columns={columns} 
@@ -143,9 +133,10 @@ interface Props {
 	config: Array<EffectJsonFormConfig>,
 	data: Array<any>,
 	pagination?: PaginationType,
-	children: any,
+	children?: ReactNode,
 	operation?: EffectJsonFormConfig;
-	liveTableRender: any
+	liveTableRender: any;
+	tableLeftButton?: JSX.Element;
 }
 
 export default forwardRef<HTMLDivElement, Props>(LiveTable);
