@@ -34,3 +34,4 @@ export const isFactoryStatus = (params: { ids: string, factoryStatus: string }) 
         'Content-Type': 'multipart/form-data'
     } });
 }
+

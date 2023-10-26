@@ -1,8 +1,9 @@
-import React, { ReactNode, forwardRef, MutableRefObject, useEffect, Ref, useState, useRef } from 'react';
+import React, { ReactNode, forwardRef, MutableRefObject, useEffect, Ref, useState, useRef, useImperativeHandle } from 'react';
 import { Table, Affix, Button, Popover, Checkbox, Space, Pagination } from 'antd';
 import type { PaginationProps } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
+import { cloneDeep } from 'lodash';
 import { EffectJsonFormConfig, JsonFormConfig } from '@/common/components/live-search/types';
 import { PaginationType } from '@/common/components/live-pagination/types';
 import styles from './css/index.module.less';
@@ -104,6 +105,19 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 			/>
 		</div>
 	);
+	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+	const onSelectChange = (newSelectedRowKeys: React.Key[], selectedRows: any[]) => {
+		setSelectedRowKeys(newSelectedRowKeys);
+	};
+	const rowSelection = {
+		selectedRowKeys,
+		onChange: onSelectChange,
+	};
+	useImperativeHandle(ref, () => {
+        return {
+			selectedRowKeys
+        }
+    });
 	
 	return (
 		<div className="mgt10">
@@ -117,12 +131,13 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 					</Affix>
 				</div>
 			</div>
-			<Table 
+			<Table
+				rowSelection={rowSelection}
 				columns={columns} 
 				dataSource={dataSource} 
 				style={{ width: '100%', overflowX: 'auto' }}
 				pagination={false}
-				rowKey={(record: any) => record.id + Date.now()}
+				rowKey={(record: any) => record.id}
 			>
 			</Table>
 		</div>

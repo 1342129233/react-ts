@@ -9,7 +9,7 @@ import { PaginationType } from '@/common/components/live-pagination/types/index'
 function StandardPage(props: Props, ref: Ref<unknown>) {
 	
 	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
-	const liveTableRef = useRef<HTMLDivElement>(null);
+	const liveTableRef = useRef<HTMLDivElement & { selectedRowKeys: Function }>(null);
 	let [data, setData] = useState<Array<Record<string, unknown>>>([]);
 	// 分页
 	const [pagination, setPagination] = useState<PaginationType>({
@@ -83,7 +83,10 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 
 	useImperativeHandle(ref, () => {
         return {
-			select: onSelect
+			select: onSelect,
+			tableSelectedRowKeys: () => {
+				return liveTableRef.current?.selectedRowKeys;
+			}
         }
     });
 	

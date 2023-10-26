@@ -4,7 +4,7 @@ import { EffectJsonFormConfig } from '@/common/components/live-search/types/inde
 import { getBrandList, isShowStatus, isFactoryStatus } from '../server';
 import { DataType } from '../type';
 
-export enum StatusEnum{
+export enum StatusEnum {
     NO = '0',
     YES = '1'
 }
@@ -70,7 +70,6 @@ export function Search(props: any) {
                                 ids: String(record.id),
                                 factoryStatus: String(StatusToNUmber[String(checked)])
                             }
-
                             try {
                                 // 请求接口
                                 await isFactoryStatus(params);
@@ -80,7 +79,6 @@ export function Search(props: any) {
                             // 从新请求
                             await standardPageRef.current?.select()
                         }
-                        
                         return <Switch 
                             key={record.factoryStatus}
                             defaultChecked={StatusToBoolean[String(record.factoryStatus)]}
