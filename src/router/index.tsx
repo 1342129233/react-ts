@@ -21,6 +21,7 @@ import {
     AppstoreAddOutlined,
     PlusSquareOutlined,
     CalendarOutlined,
+    SettingOutlined
 } from '@ant-design/icons';
 import { RouterType } from './type';
 
@@ -34,6 +35,7 @@ const Brand = lazy(() => import("@/view/product-management/brand/index")) // 品
 
 
 const OrderList = lazy(() => import("@/view/order-module/order-list/index"))
+const OrderSetting = lazy(() => import("@/view/order-module/order-setting/index"))
 
 
 const SecondKill = lazy(() => import("@/view/marketing-module/second-kill/index"))
@@ -161,6 +163,16 @@ const router: RouterType[] = [
                 element: <OrderList />,
                 meta: {
                     path: ['订单管理', '订单列表']
+                }
+            },
+            {
+                path: '/order-module/order-setting',
+                label: '订单设置',
+                key: '/order-module/order-setting',
+                icon: <SettingOutlined />,
+                element: <OrderSetting />,
+                meta: {
+                    path: ['订单管理', '订单设置']
                 }
             }
         ],
