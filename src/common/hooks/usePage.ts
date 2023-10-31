@@ -1,12 +1,23 @@
 import React, { useState, useRef } from 'react';
 
-export interface pageType {
+export interface PageType {
     pageNum: number; 
     pageSize: number;
     total?: number;
 }
 
-export function usePage(callback: (params: pageType) => Promise<void>) {
+export interface PaginationProps {
+	showSizeChanger: boolean;
+	showQuickJumper: boolean;
+	showTotal: () => string
+	pageSize: number;
+	pageNum: number;
+	total: number;
+	onChange: (pageNum: number, pageSize: number) => void,
+	pageSizeOptions: number[]
+}
+
+export function usePage(callback: (params: PageType) => void) {
     const [page, setPage] = useState({
 		pageNum: 1,
 		pageSize: 5,
@@ -17,19 +28,20 @@ export function usePage(callback: (params: pageType) => Promise<void>) {
 		showQuickJumper: false,
 		showTotal: () => `共${page.total}条`,
 		pageSize: page.pageSize,
-		current: page.pageNum,
+		pageNum: page.pageNum,
 		total: page.total,
-		onChange: (current: number, pageSize: number) => handlePageChange(current, pageSize),
+		onChange: (pageNum: number, pageSize: number) => handlePageChange(pageNum, pageSize),
 		pageSizeOptions: [5, 10, 20, 30]
 	}
 
-    const handlePageChange = (current: number, pageSize: number) => {
+    const handlePageChange = (pageNum: number, pageSize: number) => {
         setPage((prev) => ({
 			...prev,
-			pageNum: current,
+			pageNum,
 			pageSize
 		}))
-        callback({pageNum: current, pageSize: pageSize})
+		console.log(7777);
+        callback({pageNum: pageNum, pageSize: pageSize})
     }
 
     return {

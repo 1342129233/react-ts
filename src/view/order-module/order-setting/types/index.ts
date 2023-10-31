@@ -1,4 +1,4 @@
-import { get,  } from '@/common/axios';
+import { Response } from '@/common/axios';
 
 export interface FormType {
     commentOvertime: number | string;

@@ -1,11 +1,10 @@
 import React, { ReactNode, forwardRef, MutableRefObject, useEffect, Ref, useState, useRef, useImperativeHandle } from 'react';
 import { Table, Affix, Button, Popover, Checkbox, Space, Pagination } from 'antd';
-import type { PaginationProps } from 'antd';
-import type { ColumnsType } from 'antd/es/table';
+import type { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import type { CheckboxValueType } from 'antd/es/checkbox/Group';
 import { cloneDeep } from 'lodash';
 import { EffectJsonFormConfig, JsonFormConfig } from '@/common/components/live-search/types';
-import { PaginationType } from '@/common/components/live-pagination/types';
+import { PaginationProps } from '@/common/hooks/usePage';
 import styles from './css/index.module.less';
 	
 interface Optopns {
@@ -15,16 +14,11 @@ interface Optopns {
 
 // React.FC<React.PropsWithChildren<Props>>
 const LiveTable = (props: Props, ref: Ref<unknown>) => {
+	const { pagination = false } = props;
 	const [columns, setColumns] = useState<ColumnsType<Object>>([]);
 	const [options, setOptions] = useState<Optopns[]>([]);
 	const [checkboxValue, setCheckboxValue] = useState<CheckboxValueType[]>([]);
 	const [dataSource, setDataSource] = useState<Array<Object>>([]);
-	const [pagination, setPagination] = useState<PaginationType>({
-		pageNum: 1,
-    	pageSize: 10,
-    	total: 0,
-		pageSizeOptions	: [10, 20, 50]
-	});
 
 	useEffect(() => {
 		const columnList: ColumnsType<Object> = [];
@@ -60,19 +54,6 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	useEffect(() => {
 		setDataSource([...props.data])
 	}, [props.data])
-
-	useEffect(() => {
-		setPagination({
-			pageNum: props.pagination?.pageNum || 1,
-			pageSize: props.pagination?.pageSize || 10,
-			total: props.pagination?.total || 0,
-			pageSizeOptions: props.pagination?.pageSizeOptions || [10, 20, 50]
-		})
-	}, [])
-
-	const handleChildUpdate = (pagination: PaginationType) => {
-		console.log('live-table', pagination)
-	}
 	
 	const checkboxOnChange = (checkedValues: CheckboxValueType[]) => {
 		// 筛选
@@ -136,7 +117,7 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 				columns={columns} 
 				dataSource={dataSource} 
 				style={{ width: '100%', overflowX: 'auto' }}
-				pagination={false}
+				pagination={pagination}
 				rowKey={(record: any) => record.id}
 			>
 			</Table>
@@ -147,10 +128,10 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 interface Props {
 	config: Array<EffectJsonFormConfig>,
 	data: Array<any>,
-	pagination?: PaginationType,
+	pagination: TablePaginationConfig | false,
 	children?: ReactNode,
 	operation?: EffectJsonFormConfig;
-	liveTableRender: any;
+	liveTableRender?: any;
 	tableLeftButton?: JSX.Element;
 }
 

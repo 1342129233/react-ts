@@ -1,74 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Table, Button, Space, Switch, message } from 'antd';
+import React, { useRef } from 'react';
+import { Button, Space, Switch, message } from 'antd';
 import { useNavigate  } from "react-router-dom";
-import LiveSearch from '@/common/components/live-search/index';
-import LiveTable from '@/common/components/live-table/index';
-import LivePagination from '@/common/components/live-pagination/index';
 import StandardPage from '@/common/components/standard-page/index';
-import { PaginationType } from '@/common/components/live-pagination/types';
 import { Search } from './configs/index';
-import { DataTable } from './types/index';
-import { productListAxios, updatePublishStatus } from './server/index';
+import { updatePublishStatus } from './server/index';
 
 
 const ProductList = () => {
 	const navigate = useNavigate()
 	const { Config, product } = Search();
-	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
-	const liveTableRef = useRef<HTMLDivElement>(null);
 	const standardPageRef = useRef<HTMLDivElement & { select: Function }>();
-	const [data, setData] = useState<Array<DataTable>>([]);
-	const [pagination, setPagination] = useState<PaginationType>({
-		pageNum: 1,
-    	pageSize: 10,
-    	total: 0,
-		pageSizeOptions: [10, 20]
-	})
-	// 处理请求数据
-	const [searchParams, setSearchParams] = useState<Record<string, unknown>>({});
-
-	// 发送请求
-	const submit = async() => {
-		try {
-			const res = await productListAxios(searchParams);
-			setData([...res.data.list]);
-			setPagination({
-				...pagination,
-				pageNum: res.data.pageNum,
-				pageSize: res.data.pageSize
-			});
-		} catch(error: any) {
-			message.error(error?.message || '请求失败')
-		}
-	}
-
-	// 搜索
-	const onSelect = () => {
-		const form = liveSeachRef.current?.getFormValue() || {};
-		setPagination({
-			...pagination,
-			pageNum: 1
-		});
-		setSearchParams({
-			...searchParams,
-			...form,
-			...pagination
-		})
-		submit();
-	}
-
-	// useEffect(() => {
-	// 	onSelect()
-	// }, [pagination.pageNum, pagination.pageSize])
-
-	// 分页
-	const handleChildUpdate = async (pagination: PaginationType) => {
-		setPagination({...pagination})
-		setSearchParams({
-			...searchParams,
-			...pagination
-		})
-	}
+	
 
 	// 以下是 table 的操作
 	const publishChange = async (check: boolean, record: any, index: number) => {
@@ -122,23 +64,8 @@ const ProductList = () => {
 			)
 		}
 	}
-
 	return (
 		<div>
-			{/* <LiveSearch
-				ref={liveSeachRef}
-				config={Config}
-				isPreAdd={false}
-				onUpdateSearch={onSelect}
-			></LiveSearch> */}
-			{/* <LiveTable
-				ref={liveTableRef}
-				config={Config.row}
-				data={data}
-				pagination={pagination}
-			>
-			</LiveTable> */}
-			{/* <LivePagination	{ ...pagination }  onUpdate={handleChildUpdate}></LivePagination>  */}
 			<StandardPage
 				ref={standardPageRef}
 				config={Config}

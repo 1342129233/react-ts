@@ -11,10 +11,17 @@ import { isArray } from 'lodash';
 
 function ProductAttrList() {
 	const productInfoRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
+	const searchParams = useRef<ProductAttributeParamsType>({
+		id: '',
+		name: '',
+		type: '',
+		pageNum: 1,
+		pageSize: 10
+	});
 	// 报错信息
 	const [searchRoute] = useSearchParams();
 	const [productId, setProductId] = useState<number | null>(null);
-	const searchParams = {
+	const routeParams = {
 		id: searchRoute.get('cid'),
 		name: searchRoute.get('cname'),
 		type: searchRoute.get('type')
@@ -35,7 +42,7 @@ function ProductAttrList() {
 			title: '商品类型',
 			key: 'commodityType',
 			render: (_: DataType, record) => (
-				<div>{searchParams.name}</div>
+				<div>{routeParams.name}</div>
 			)
 		},
 		{
@@ -76,22 +83,14 @@ function ProductAttrList() {
 		const value = list.toString();
 		try {
 			await delProductAttribute(value);
-			handleProductAttribut(page);
+			handleProductAttribut();
 		} catch(error: any) {
 			message.error(error?.message || '请求失败')
 		}
 	};
-	const handleProductAttribut = async (page: PageType) => {
-		const { total = 0, ...pagInfo } = page;
-		const params = Object.assign({
-			id: '',
-			name: '',
-			type: '',
-			pageNum: 0,
-			pageSize: 0
-		}, pagInfo, searchParams)
+	const handleProductAttribut = async () => {
 		try {
-			const res = await getProductAttribute(params);
+			const res = await getProductAttribute(searchParams.current);
 			setData([
 				...res.data.list
 			])
@@ -105,7 +104,20 @@ function ProductAttrList() {
 			message.error(error?.message || '请求失败')
 		}
 	}
-	const { paginationProps, page, setPage } = usePage(handleProductAttribut);
+	const handlePageChange = (paramsPage: PageType) => {
+		searchParams.current = Object.assign({
+			id: '',
+			name: '',
+			type: '',
+			pageNum: 0,
+			pageSize: 0
+		}, {
+			pageNum: paramsPage.pageNum,
+			pageSize: paramsPage.pageSize
+		}, routeParams);
+		handleProductAttribut()
+	}
+	const { paginationProps, page, setPage } = usePage(handlePageChange);
 	const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 	const rowSelection = {
 		onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -125,7 +137,17 @@ function ProductAttrList() {
 	}
 
 	useEffect(() => {
-		handleProductAttribut(page);
+		searchParams.current = Object.assign({
+			id: '',
+			name: '',
+			type: '',
+			pageNum: 0,
+			pageSize: 0
+		}, {
+			pageNum: page.pageNum,
+			pageSize: page.pageSize
+		}, routeParams)
+		handleProductAttribut();
 	}, [])
 	return (
 		<div>
