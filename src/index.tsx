@@ -3,7 +3,7 @@ import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn'
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import './index.less';
 import App from './App';
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 

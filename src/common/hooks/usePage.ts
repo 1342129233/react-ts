@@ -40,7 +40,6 @@ export function usePage(callback: (params: PageType) => void) {
 			pageNum,
 			pageSize
 		}))
-		console.log(7777);
         callback({pageNum: pageNum, pageSize: pageSize})
     }
 

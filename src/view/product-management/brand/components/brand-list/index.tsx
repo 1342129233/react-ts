@@ -39,7 +39,7 @@ function BrandForm(props: PropsType, ref: Ref<unknown>) {
 			message.error(error?.message || '删除失败')
 		}
 	}
-	useDidUpdateEffect(() => 
+	useDidUpdateEffect(() =>
 		id !== 0 ? getBrand() : setForm({...info})
 	, [id])
 	return (
@@ -58,7 +58,5 @@ function BrandForm(props: PropsType, ref: Ref<unknown>) {
 		</TheDrawer>
 	);
 }
-
-
 
 export default forwardRef<HTMLDivElement, PropsType>(BrandForm);
