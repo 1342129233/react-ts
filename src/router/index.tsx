@@ -22,7 +22,8 @@ import {
     PlusSquareOutlined,
     CalendarOutlined,
     SettingOutlined,
-    FileExcelOutlined
+    FileExcelOutlined,
+    ImportOutlined
 } from '@ant-design/icons';
 import { RouterType } from './type';
 
@@ -37,6 +38,7 @@ const Brand = lazy(() => import("@/view/product-management/brand/index")) // 品
 
 const OrderList = lazy(() => import("@/view/order-module/order-list/index"))
 const OrderSetting = lazy(() => import("@/view/order-module/order-setting/index"))
+const ReturnApply = lazy(() => import("@/view/order-module/return-apply/index"))
 const ReturnReason = lazy(() => import("@/view/order-module/return-reason/index"))
 
 
@@ -175,6 +177,16 @@ const router: RouterType[] = [
                 element: <OrderSetting />,
                 meta: {
                     path: ['订单管理', '订单设置']
+                }
+            },
+            {
+                path: '/order-module/return-apply',
+                label: '退货原因设置',
+                key: '/order-module/return-apply',
+                icon: <ImportOutlined />,
+                element: <ReturnApply />,
+                meta: {
+                    path: ['订单管理', '退货申请处理']
                 }
             },
             {

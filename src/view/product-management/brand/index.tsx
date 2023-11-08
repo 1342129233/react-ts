@@ -24,7 +24,7 @@ function Brand() {
 			message.error(error?.message || '删除失败')
 		}
     }
-	const { config } = Search({ handleEdit, handleDelete, standardPageRef });
+	const { row, getBrandList } = Search({ handleEdit, handleDelete, standardPageRef });
 
 	// 新增
 	const add = () => {
@@ -54,7 +54,10 @@ function Brand() {
 		<div>
 			<StandardPage
 				ref={standardPageRef}
-				config={config}
+				config={{
+					rows: row,
+                    fetchConfig: getBrandList
+				}}
 				tableLeftButton={
 					<div className={styles.tableLeftButton}>
 						<Button onClick={() => add()}>新增</Button>

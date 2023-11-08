@@ -11,6 +11,7 @@ const LivePagination = (props: Props) => {
         <Pagination
             {...pagination}
             current={page.pageNum}
+            style={{ marginTop: 10 }} 
         />
     );
 }

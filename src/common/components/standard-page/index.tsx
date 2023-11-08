@@ -15,8 +15,9 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 	const searchParamsRef = useRef();
 	// 发送请求
 	const submit = async () => {
+		const params = searchParamsRef.current;
 		try {
-			const res = await props.config.fetchConfig(searchParamsRef.current);
+			const res = await props.config.fetchConfig(params);
 			data = res.data.list;
 			setData([...data]);
 			setPage((prev) => {
@@ -63,27 +64,27 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 		<div>
 			<LiveSearch
 				ref={liveSeachRef}
-				config={props.config.row}
+				config={props.config.rows}
 				isPreAdd={false}
 				onUpdateSearch={() => onSelect({pageNum: 1,pageSize: page.pageSize })}
 			></LiveSearch>
 			<LiveTable
 				ref={liveTableRef}
-				config={props.config.row}
+				config={props.config.rows}
 				data={data}
 				pagination={paginationConfig}
 				liveTableRender={props.liveTableRender || {}}
 				tableLeftButton={props?.tableLeftButton}
 			>
 			</LiveTable>
-			<LivePagination pagination={ paginationProps } page={page}/>
+			<LivePagination pagination={ paginationProps } page={page} />
 		</div>
 	);
 }
 
 interface Props {
 	config: {
-		row: Array<EffectJsonFormConfig>,
+		rows: Array<EffectJsonFormConfig>,
 		fetchConfig: Function
 	},
 	paginationConfig?: TablePaginationConfig | false;

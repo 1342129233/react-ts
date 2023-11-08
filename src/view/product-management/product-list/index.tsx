@@ -8,7 +8,7 @@ import { updatePublishStatus } from './server/index';
 
 const ProductList = () => {
 	const navigate = useNavigate()
-	const { Config, product } = Search();
+	const { row, productListAxios, product } = Search();
 	const standardPageRef = useRef<HTMLDivElement & { select: Function }>();
 	
 
@@ -68,7 +68,10 @@ const ProductList = () => {
 		<div>
 			<StandardPage
 				ref={standardPageRef}
-				config={Config}
+				config={{
+					rows: row,
+					fetchConfig: productListAxios
+				}}
 				liveTableRender={liveTableRender}
 			></StandardPage>
 		</div>
