@@ -9,14 +9,20 @@ function ReturnApply() {
     const handleEdit = () => {}
     const handleDelete = () => {}
     const { row, returnApplyList } = standardPageModel({ handleEdit, handleDelete });
-    const formParams = () => {}
+    const formateSearchParams = (params: Record<string, unknown>) => {
+        return {
+            ...params,
+            createTime: '2018-10-17'
+        }
+    }
     return (
         <>
             <StandardPage
                 ref={standardPageRef}
                 config={{
                     rows: row,
-                    fetchConfig: returnApplyList
+                    fetchConfig: returnApplyList,
+                    formateSearchParams: formateSearchParams
                 }}
                 tableLeftButton={<Button type="primary" danger>批量删除</Button>}
             ></StandardPage>

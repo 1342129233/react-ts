@@ -8,14 +8,14 @@ import { EffectJsonFormConfig, JsonDatePickerConfig } from '@/common/components/
 import { usePage, PageType, PaginationProps } from '@/common/hooks/usePage';
 
 function StandardPage(props: Props, ref: Ref<unknown>) {
-	const { paginationConfig = false } = props;
+	const { paginationConfig = false, config } = props;
 	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
 	const liveTableRef = useRef<HTMLDivElement & { selectedRowKeys: Function }>(null);
 	let [data, setData] = useState<Array<Record<string, unknown>>>([]);
 	const searchParamsRef = useRef();
 	// 发送请求
 	const submit = async () => {
-		const params = searchParamsRef.current;
+		const params = config.formateSearchParams?.(searchParamsRef.current) ?? searchParamsRef.current;
 		try {
 			const res = await props.config.fetchConfig(params);
 			data = res.data.list;
@@ -85,7 +85,8 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 interface Props {
 	config: {
 		rows: Array<EffectJsonFormConfig>,
-		fetchConfig: Function
+		fetchConfig: Function,
+		formateSearchParams?: (params: any)=> unknown,
 	},
 	paginationConfig?: TablePaginationConfig | false;
 	onPreAdd?: () => void;
