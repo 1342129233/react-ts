@@ -38,8 +38,8 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 		const form = liveSeachRef.current?.getFormValue() || {};
 		const list = {
 			...form,
-			pageNum: pageValue.pageNum,
-			pageSize: pageValue.pageSize
+			pageNum: pageValue.pageNum ?? page.pageNum,
+			pageSize: pageValue.pageSize ?? page.pageSize,
 		};
 		searchParamsRef.current = list;
 		submit();

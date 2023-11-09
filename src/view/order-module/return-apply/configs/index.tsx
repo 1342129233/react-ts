@@ -18,7 +18,7 @@ export const StatusMap: { [key in StatusEnum]: string } = {
     [StatusEnum.Declined]: "已拒绝",
 }
 
-export function standardPageModel(params: { handleEdit: (val: DataType) => void, handleDelete: (val: DataType) => void }) {
+export function standardPageModel(params: { handleEdit: (val: DataType) => void, handleDelete: (val: React.Key) => void }) {
     const { handleEdit, handleDelete } = params;
     const row = [
         {
@@ -101,11 +101,11 @@ export function standardPageModel(params: { handleEdit: (val: DataType) => void,
                                 type="link"
                                 onClick={() => { handleEdit(record) }}
                             >
-                                编辑
+                                查看详情
                             </Button>
                             <Button
                                 type="link"
-                                onClick={() => { handleDelete(record) }}
+                                onClick={() => { handleDelete(record.id) }}
                                 danger
                             >
                                 删除

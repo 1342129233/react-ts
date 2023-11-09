@@ -94,6 +94,7 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	};
 	useImperativeHandle(ref, () => {
         return {
+			selectedRowKeys,
 			keys: () => {
 				return selectedRowKeys;
 			}
