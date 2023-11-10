@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { lazy, Suspense, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
     HomeOutlined,
@@ -56,6 +56,14 @@ const MenuAuthority = lazy(() => import("@/view/authority-module/menu-authority/
 const AssetsAuthority = lazy(() => import("@/view/authority-module/assets-authority/index"))
 
 
+// 实现懒加载的用Suspense包裹 定义函数
+const lazyLoad = (children: ReactNode): ReactNode =>{
+    return <Suspense fallback={<h1>Loading...</h1>}>
+        {children}
+    </Suspense>
+  }
+  
+
 const router: RouterType[] = [
     {
         path: '/',
@@ -90,7 +98,7 @@ const router: RouterType[] = [
                 label: '产品列表',
                 key: '/product-management/product-list',
                 icon: <ProfileOutlined />,
-                element: <ProductManagementList />,
+                element: lazyLoad(<ProductManagementList />),
                 meta: {
                     path: ['产品管理', '产品列表']
                 }
@@ -100,7 +108,7 @@ const router: RouterType[] = [
                 label: '商品详情',
                 key: '/product-management/product-update',
                 icon: <PlusSquareOutlined />,
-                element: <ProductUpdate />,
+                element: lazyLoad(<ProductUpdate />),
                 meta: {
                     path: ['产品管理', '商品详情']
                 }
@@ -110,7 +118,7 @@ const router: RouterType[] = [
                 label: '商品分类',
                 key: '/product-management/product-sort',
                 icon: <AppstoreAddOutlined />,
-                element: <ProductSort />,
+                element: lazyLoad(<ProductSort />),
                 meta: {
                     path: ['产品管理', '商品分类']
                 },
@@ -121,7 +129,7 @@ const router: RouterType[] = [
                 label: '商品类型',
                 key: '/product-management/product-attr',
                 icon: <CalendarOutlined />,
-                element: <ProductAttr />,
+                element: lazyLoad(<ProductAttr />),
                 meta: {
                     path: ['产品管理', '商品分类']
                 }
@@ -131,7 +139,7 @@ const router: RouterType[] = [
                 label: '商品属性列表',
                 key: '/product-management/product-attr-list',
                 icon: <CalendarOutlined />,
-                element: <ProductAttrList />,
+                element: lazyLoad(<ProductAttrList />),
                 meta: {
                     invisible: true,
                     path: ['产品管理', '商品属性']
@@ -142,7 +150,7 @@ const router: RouterType[] = [
                 label: '商品属性列表',
                 key: '/product-management/brand',
                 icon: <TagOutlined />,
-                element: <Brand />,
+                element: lazyLoad(<Brand />),
                 meta: {
                     path: ['产品管理', '品牌管理']
                 }
@@ -164,7 +172,7 @@ const router: RouterType[] = [
                 label: '订单列表',
                 key: '/order-module/order-list',
                 icon: <ProfileOutlined />,
-                element: <OrderList />,
+                element: lazyLoad(<OrderList />),
                 meta: {
                     path: ['订单管理', '订单列表']
                 }
@@ -174,7 +182,7 @@ const router: RouterType[] = [
                 label: '订单设置',
                 key: '/order-module/order-setting',
                 icon: <SettingOutlined />,
-                element: <OrderSetting />,
+                element: lazyLoad(<OrderSetting />),
                 meta: {
                     path: ['订单管理', '订单设置']
                 }
@@ -184,7 +192,7 @@ const router: RouterType[] = [
                 label: '退货原因设置',
                 key: '/order-module/return-apply',
                 icon: <ImportOutlined />,
-                element: <ReturnApply />,
+                element: lazyLoad(<ReturnApply />),
                 meta: {
                     path: ['订单管理', '退货申请处理']
                 }
@@ -194,7 +202,7 @@ const router: RouterType[] = [
                 label: '退货原因设置',
                 key: '/order-module/return-reason',
                 icon: <FileExcelOutlined />,
-                element: <ReturnReason />,
+                element: lazyLoad(<ReturnReason />),
                 meta: {
                     path: ['订单管理', '退货原因设置']
                 }
@@ -219,7 +227,7 @@ const router: RouterType[] = [
                 label: '秒杀活动',
                 key: '/marketing-module/second-kill',
                 icon: <AlertOutlined />,
-                element: <SecondKill />,
+                element: lazyLoad(<SecondKill />),
                 meta: {
                     path: ['营销模块', '秒杀活动']
                 }
@@ -229,7 +237,7 @@ const router: RouterType[] = [
                 label: '优惠券列表',
                 key: '/marketing-module/coupon-list',
                 icon: <AccountBookOutlined />,
-                element: <CouponList />,
+                element: lazyLoad(<CouponList />),
                 meta: {
                     path: ['营销模块', '优惠券列表']
                 }
@@ -239,7 +247,7 @@ const router: RouterType[] = [
                 label: '品牌推荐',
                 key: '/marketing-module/brand-recommendation',
                 icon: <TagOutlined />,
-                element: <BrandRecommendation />,
+                element: lazyLoad(<BrandRecommendation />),
                 meta: {
                     path: ['营销模块', '品牌推荐']
                 }
@@ -249,7 +257,7 @@ const router: RouterType[] = [
                 label: '新品推荐',
                 key: '/marketing-module/new-product-recommendation',
                 icon: <ShopOutlined />,
-                element: <NewProductRecommendation />,
+                element: lazyLoad(<NewProductRecommendation />),
                 meta: {
                     path: ['营销模块', '新品推荐']
                 }
@@ -259,7 +267,7 @@ const router: RouterType[] = [
                 label: '人气推荐',
                 key: '/marketing-module/popular-recommendation',
                 icon: <FireOutlined />,
-                element: <PopularRecommendation />,
+                element: lazyLoad(<PopularRecommendation />),
                 meta: {
                     path: ['营销模块', '人气推荐']
                 }
@@ -269,7 +277,7 @@ const router: RouterType[] = [
                 label: '专题推荐',
                 key: '/marketing-module/special-recommendation',
                 icon: <FileSearchOutlined />,
-                element: <SpecialRecommendation />,
+                element: lazyLoad(<SpecialRecommendation />),
                 meta: {
                     path: ['营销模块', '专题推荐']
                 }
@@ -279,7 +287,7 @@ const router: RouterType[] = [
                 label: '广告列表',
                 key: '/marketing-module/advertising-list',
                 icon: <ProfileOutlined />,
-                element: <AdvertisingList />,
+                element: lazyLoad(<AdvertisingList />),
                 meta: {
                     path: ['营销模块', '广告列表']
                 }
@@ -301,7 +309,7 @@ const router: RouterType[] = [
                 label: '用户授权',
                 key: 'authority-module/user-authority',
                 icon: <UserOutlined />,
-                element: <UserAuthority />,
+                element: lazyLoad(<UserAuthority />),
                 meta: {
                     path: ['权限模块', '用户授权']
                 }
@@ -311,7 +319,7 @@ const router: RouterType[] = [
                 label: '角色授权',
                 key: 'authority-module/characters-authority',
                 icon: <TeamOutlined />,
-                element: <CharactersAuthority />,
+                element: lazyLoad(<CharactersAuthority />),
                 meta: {
                     path: ['权限模块', '角色授权']
                 }
@@ -321,7 +329,7 @@ const router: RouterType[] = [
                 label: '菜单授权',
                 key: 'authority-module/menu-authority',
                 icon: <AppstoreOutlined />,
-                element: <MenuAuthority />,
+                element: lazyLoad(<MenuAuthority />),
                 meta: {
                     path: ['权限模块', '菜单授权']
                 }
@@ -331,24 +339,13 @@ const router: RouterType[] = [
                 label: '资源授权',
                 key: 'authority-module/assets-authority',
                 icon: <UngroupOutlined />,
-                element: <AuditOutlined />,
+                element: lazyLoad(<AuditOutlined />),
                 meta: {
                     path: ['权限模块', '资源授权']
                 }
             }
         ]
-    },
-    {
-        path: '*',
-        label: '',
-        key: '/',
-        icon: <HomeOutlined />,
-        element: <Navigate to="/home" />,
-        meta: {
-            invisible: true,
-            path: ['']
-        }
-    },
+    }
 ]
 
 // 筛选排除 invisible: true

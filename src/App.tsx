@@ -10,7 +10,6 @@ import {
 	VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Tabs, Breadcrumb } from 'antd';
-import { Home } from '@/router';
 
 interface ItemTabsType {
 	label: string;
@@ -214,19 +213,15 @@ function App() {
 						overflowY: 'scroll'
 					}}
 				>
-					<Suspense fallback={
-						<div>路由懒加载...</div>
-					}>
-						<Routes>
-							{
-								router.map((item) => (
-									<Route key={item.path} path={item.path} element={item.element}>
-										{ (item.children && item.children.length) ? (item.children.map((child) => <Route path={child.path} element={child.element} key={child.path}></Route>)) : null }
-									</Route>
-								))
-							}
-						</Routes>
-					</Suspense>
+					<Routes>
+						{
+							router.map((item) => (
+								<Route key={item.path} path={item.path} element={item.element}>
+									{ (item.children && item.children.length) ? (item.children.map((child) => <Route path={child.path} element={child.element} key={child.path}></Route>)) : null }
+								</Route>
+							))
+						}
+					</Routes>
 				</Content>
 			</Layout>
 		</Layout>
