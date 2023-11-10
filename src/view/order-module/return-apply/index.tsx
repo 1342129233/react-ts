@@ -1,16 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, message } from 'antd';
 import StandardPage from '@/common/components/standard-page/index';
 import ReturnApplyDetail from './components/returnApplyDetail/index';
 import { standardPageModel } from './configs/index';
 import { returnApplyDel } from './server';
 import { momentFormat } from '@/common/utils';
+import { DataType } from './types';
 import { isArray } from 'lodash';
 
 function ReturnApply() {
     const standardPageRef = useRef<HTMLDivElement & { select: Function, tableSelectedRowKeys: Function }>();
-
-    const handleEdit = () => {}
+    const returnApplyDetailDrawer = useRef<HTMLDivElement & { isOpen: Function }>(null);
+    const [id, setId] = useState<number>(0)
+    const handleEdit = (record: DataType) => {
+        setId(record.id)
+        returnApplyDetailDrawer.current?.isOpen()
+    }
     
     // 删除
 	const handleDelete = async(id: React.Key | React.Key[]) => {
@@ -57,7 +62,10 @@ function ReturnApply() {
                 }}
                 tableLeftButton={<Button type="primary" onClick={() => delList()} danger>批量删除</Button>}
             ></StandardPage>
-            <ReturnApplyDetail />
+            <ReturnApplyDetail 
+                ref={returnApplyDetailDrawer}
+                id={id}
+            />
         </>
     )
 }

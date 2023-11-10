@@ -10,6 +10,7 @@ import {
 	VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, Button, theme, Tabs, Breadcrumb } from 'antd';
+import { Home } from '@/router';
 
 interface ItemTabsType {
 	label: string;

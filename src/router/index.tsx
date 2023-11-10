@@ -27,7 +27,7 @@ import {
 } from '@ant-design/icons';
 import { RouterType } from './type';
 
-const Home = lazy(() => import("@/view/home/index"))
+export const Home = lazy(() => import("@/view/home/index"))
 const ProductManagementList = lazy(() => import("@/view/product-management/product-list/index"))
 const ProductUpdate = lazy(() => import("@/view/product-management/product-update/index"))
 const ProductSort = lazy(() => import("@/view/product-management/product-sort/index"))
@@ -337,6 +337,17 @@ const router: RouterType[] = [
                 }
             }
         ]
+    },
+    {
+        path: '*',
+        label: '',
+        key: '/',
+        icon: <HomeOutlined />,
+        element: <Navigate to="/home" />,
+        meta: {
+            invisible: true,
+            path: ['']
+        }
     },
 ]
 

@@ -51,7 +51,7 @@ function TheDrawer(props: Props) {
 			onClose={onClose} 
 			open={open}
 			className={styles.theDrawer}
-			style={{ paddingBottom: !showFooter ? '80px' : '0px' }}
+			style={{ paddingBottom: !showFooter ? '80px' : '20px' }}
 		>
 			
 			{ children }
