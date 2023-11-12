@@ -108,26 +108,29 @@ function App() {
 		setOpenKeys([keys[keys.length-1]])
 	}
 
+	const setItems = (routers: RouterType[], list: RouterType[]) => {
+		routers.map((menu: RouterType, index: number) => { //map不改变原数组
+			const children: RouterType[] = [];
+			list.push({
+				...menu
+			})
+			if(menu.children && menu.children.length) {
+				setItems(menu.children, children!)
+			}
+			if(children.length > 0) {
+				list[index].children = children;
+			} 
+		});
+	}
+
 	useEffect(() => {
 		// 平级路由
 		routersList = parallelGradeRouters(router)
 		// 左侧列表
 		const itemsMenu: RouterType[] = [];
-		router.map((menu: RouterType) => {//map不改变原数组
-			if (menu.meta && menu.meta.invisible) {
-			  return;//如果存在并为true，则表示此菜单不需要展示，则不给最终的数组赋值即可
-			} else if (menu.children && menu.children.length) {
-				//如果有子级的话，则需要用到递归了。
-				itemsMenu.push({
-				 ...menu,
-				 children: filterMenu(menu.children),
-			   });
-			} else {
-				//如果没有子级，也就是只有一级菜单，则直接给最终的数组赋值即可。
-				itemsMenu.push(menu);
-			}
-		});
+		setItems(router, itemsMenu)
 		setItemsMenu([...itemsMenu])
+
 	}, [])
 
 	// 面包屑
@@ -217,7 +220,11 @@ function App() {
 						{
 							router.map((item) => (
 								<Route key={item.path} path={item.path} element={item.element}>
-									{ (item.children && item.children.length) ? (item.children.map((child) => <Route path={child.path} element={child.element} key={child.path}></Route>)) : null }
+									{ (item.children && item.children.length) 
+										? 
+										(item.children.map((child) => <Route path={child.path} element={child.element} key={child.path}></Route>)) 
+										: 
+										null }
 								</Route>
 							))
 						}
