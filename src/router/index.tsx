@@ -147,7 +147,7 @@ const router: RouterType[] = [
             },
             {
                 path: '/product-management/brand',
-                label: '商品属性列表',
+                label: '品牌管理',
                 key: '/product-management/brand',
                 icon: <TagOutlined />,
                 element: lazyLoad(<Brand />),

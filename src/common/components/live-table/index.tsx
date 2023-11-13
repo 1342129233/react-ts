@@ -24,25 +24,26 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 		const columnList: ColumnsType<Object> = [];
 		const liveTableRender = props.liveTableRender || {}
 		props.config.forEach((item: EffectJsonFormConfig) => {
-			columnList.push({
-				title: item.table?.label || item.label,
-				width: item?.table?.width || 100,
-				dataIndex: item.key,
-				key: item.key,
-				align: 'center',
-				render: item?.table?.render || liveTableRender[item.key] || undefined
-			});
-			options.push({
-				value: item.key,
-				label: item.label
-			})
-			
-			setOptions([
-				...options
-			])
-			checkboxValue.push(item.key);
+			if(item.table) {
+				columnList.push({
+					title: item.table?.label || item.label,
+					width: item?.table?.width || 100,
+					dataIndex: item.key,
+					key: item.key,
+					align: 'center',
+					render: item?.table?.render || liveTableRender[item.key] || undefined
+				});
+				options.push({
+					value: item.key,
+					label: item.label
+				})
+				
+				setOptions([
+					...options
+				])
+				checkboxValue.push(item.key);
+			}
 		});
-		
 		setColumns([
 			...columnList
 		])

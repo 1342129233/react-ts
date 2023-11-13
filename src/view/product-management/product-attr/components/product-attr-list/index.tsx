@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Table, Button, Popconfirm, message } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { usePage } from '@/common/hooks/usePage';
@@ -10,6 +10,7 @@ import styles from './style/index.module.less';
 import { isArray } from 'lodash';
 
 function ProductAttrList() {
+	const navigate = useNavigate();
 	const productInfoRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
 	const searchParams = useRef<ProductAttributeParamsType>({
 		id: '',
@@ -89,6 +90,11 @@ function ProductAttrList() {
 		}
 	};
 	const handleProductAttribut = async () => {
+		if(!searchRoute.get('cid')) {
+			message.error('请重商品类型选择属性/参数列表');
+			navigate('/product-management/product-attr')
+			return;
+		}
 		try {
 			const res = await getProductAttribute(searchParams.current);
 			setData([
