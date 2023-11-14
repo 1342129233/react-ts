@@ -6,6 +6,7 @@ import { orderDelete } from './servers';
 import { standardPageModel } from './configs/index';
 import styles from './style/index.module.less';
 import { isArray } from 'lodash';
+import { DataType } from './types';
 
 function OrderList() {
 	const navigate = useNavigate();
@@ -31,8 +32,8 @@ function OrderList() {
 			message.error(error?.message || '请求失败')
 		}
 	};
-	const handleEdit = () => {
-		// navigate();
+	const handleEdit = (record: DataType) => {
+		navigate(`/order-module/order-list/order-detail?id=${record.id}`);
 	}
 	const handleDeleteList = () => {
 		const idList = standardPageRef.current?.tableSelectedRowKeys() || [];

@@ -14,7 +14,7 @@ interface Optopns {
 
 // React.FC<React.PropsWithChildren<Props>>
 const LiveTable = (props: Props, ref: Ref<unknown>) => {
-	const { pagination = false } = props;
+	const { pagination = false, tablePopover = true, isRowSelection = true } = props;
 	const [columns, setColumns] = useState<ColumnsType<Object>>([]);
 	const [options, setOptions] = useState<Optopns[]>([]);
 	const [checkboxValue, setCheckboxValue] = useState<CheckboxValueType[]>([]);
@@ -95,27 +95,29 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 	};
 	useImperativeHandle(ref, () => {
         return {
-			selectedRowKeys,
-			keys: () => {
-				return selectedRowKeys;
-			}
+			selectedRowKeys
         }
     });
 	
 	return (
 		<div className="mgt10">
-			<div className={styles.tableTop} >
-				<div>{props.tableLeftButton}</div>
-				<div className='mgb10'>
-					<Affix offsetTop={10}>
-						<Popover placement="right" title={'修改表格展示内容'} content={content} trigger="click">
-							<Button type="primary">修改列表展示</Button>
-						</Popover>
-					</Affix>
-				</div>
-			</div>
+			{
+				tablePopover ? <div className={styles.tableTop}>
+					<div>{props.tableLeftButton}</div>
+					<div className='mgb10'>
+						<Affix offsetTop={10}>
+							<Popover placement="right" title={'修改表格展示内容'} content={content} trigger="click">
+								<Button type="primary">修改列表展示</Button>
+							</Popover>
+						</Affix>
+					</div>
+				</div> 
+				: 
+				<></>
+			}
+			
 			<Table
-				rowSelection={rowSelection}
+				rowSelection={isRowSelection ? rowSelection : undefined}
 				columns={columns} 
 				dataSource={dataSource} 
 				style={{ width: '100%', overflowX: 'auto' }}
@@ -135,6 +137,8 @@ interface Props {
 	operation?: EffectJsonFormConfig;
 	liveTableRender?: any;
 	tableLeftButton?: JSX.Element;
+	tablePopover?: boolean;
+	isRowSelection?: boolean;
 }
 
 export default forwardRef<HTMLDivElement, Props>(LiveTable);

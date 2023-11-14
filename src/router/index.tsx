@@ -37,9 +37,11 @@ const Brand = lazy(() => import("@/view/product-management/brand/index")) // 品
 
 
 const OrderList = lazy(() => import("@/view/order-module/order-list/index"))
+const OrderDetail = lazy(() => import("@/view/order-module/order-list/components/order-detail/index"))
 const OrderSetting = lazy(() => import("@/view/order-module/order-setting/index"))
 const ReturnApply = lazy(() => import("@/view/order-module/return-apply/index"))
 const ReturnReason = lazy(() => import("@/view/order-module/return-reason/index"))
+
 
 
 const SecondKill = lazy(() => import("@/view/marketing-module/second-kill/index"))
@@ -175,6 +177,16 @@ const router: RouterType[] = [
                 element: lazyLoad(<OrderList />),
                 meta: {
                     path: ['订单管理', '订单列表']
+                },
+            },
+            {
+                path: '/order-module/order-list/order-detail',
+                label: '订单详情',
+                key: '/order-module/order-list/order-detail',
+                icon: <ProfileOutlined />,
+                element: lazyLoad(<OrderDetail />),
+                meta: {
+                    path: ['订单管理', '订单详情']
                 }
             },
             {
