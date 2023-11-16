@@ -25,3 +25,13 @@ export const advertisingPositionMap: { [key in AdvertisingPositionEnum]: string 
     [AdvertisingPositionEnum.PC]: 'PC首页轮播',
     [AdvertisingPositionEnum.APP]: 'APP首页轮播'
 }
+
+export enum recommendStatusEnum {
+    CANCEL = 0,
+    VERIFY = 1
+}
+
+export const recommendStatusMap: { [key in recommendStatusEnum]: string } = {
+    [recommendStatusEnum.CANCEL]: '未推荐',
+    [recommendStatusEnum.VERIFY]: '推荐'
+}

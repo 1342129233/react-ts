@@ -55,7 +55,8 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 			select: onSelect,
 			tableSelectedRowKeys: () => {
 				return liveTableRef.current?.selectedRowKeys;
-			}
+			},
+			tableData: data
         }
     });
 	// 分页
