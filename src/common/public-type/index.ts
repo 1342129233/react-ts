@@ -15,3 +15,13 @@ export const statusMap: { [key in statusEnum]: string } = {
     [statusEnum.COMPLETE]: '已完成',
     [statusEnum.OFF]: '已关闭'
 }
+
+export enum AdvertisingPositionEnum {
+    PC = 0,
+    APP = 1
+}
+
+export const advertisingPositionMap: { [key in AdvertisingPositionEnum]: string } = {
+    [AdvertisingPositionEnum.PC]: 'PC首页轮播',
+    [AdvertisingPositionEnum.APP]: 'APP首页轮播'
+}

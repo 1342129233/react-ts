@@ -8,7 +8,7 @@ export function momentFormat(value: string | number) {
 
 export const formatDate = (timestamp: string | number, defaultFormat?: unknown) => {
     if(timestamp) {
-        return format(new Date(+timestamp), 'yyyy-MM-dd HH:mm');
+        return format(new Date(+timestamp), 'yyyy-MM-dd HH:mm:ss');
     }
     return defaultFormat;
 };
@@ -16,4 +16,5 @@ export const formatDate = (timestamp: string | number, defaultFormat?: unknown) 
 export const dayjsDate  = (timestamp: string | number) => {
     return dayjs(timestamp, "YYYY-MM-DD HH:mm:ss")
 };
+
 

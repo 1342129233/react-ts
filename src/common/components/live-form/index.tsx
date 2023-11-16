@@ -37,6 +37,7 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 			item.value = props.dataInfo[item.name];
 			return item.render(item);
 		}
+		
 		if(item.tag === 'input') {
 			return <Input allowClear />
 		}
@@ -121,6 +122,14 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 		}
 		if(item.tag === 'datePicker') {
 			return <DatePicker format="YYYY-MM-DD HH:mm:ss" />
+		}
+		if(item.tag === 'upload') {
+			return <Upload action={item.search.url} maxCount={item.search.maxCount} listType="picture-card">
+            <div>
+				<PlusOutlined />
+				<div style={{ marginTop: 8 }}>Upload</div>
+            </div>
+          </Upload>
 		}
 		return <></>
 	}
