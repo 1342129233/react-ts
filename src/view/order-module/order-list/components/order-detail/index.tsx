@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Steps, Space, Card, Button, message } from 'antd';
 import LiveTable from '@/common/components/live-table/index';
 import { tableModel } from './configs/index';
@@ -9,6 +9,7 @@ import styles from './style/index.module.less';
 
 function OrderDetail() {
     const [searchRoute] = useSearchParams();
+    const navigate = useNavigate();
     const id = searchRoute.get('id');
     // 基本信息
     const [basicInformationData, setBasicInformationData] = useState<BasicDataType[]>([]);
@@ -55,7 +56,12 @@ function OrderDetail() {
 		}
     }
     useEffect(() => {
-        getOrderList();
+        if(id) {
+            getOrderList();
+        } else {
+            message.warning('请从订单列表进入')
+            navigate(`/order-module/order-list`)
+        }
     }, [])
     // 基础信息
     const basicClick = (data: OrderData) => {

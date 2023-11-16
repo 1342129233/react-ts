@@ -8,7 +8,7 @@ import { EffectJsonFormConfig, JsonDatePickerConfig } from '@/common/components/
 import { usePage, PageType, PaginationProps } from '@/common/hooks/usePage';
 
 function StandardPage(props: Props, ref: Ref<unknown>) {
-	const { paginationConfig = false, config, isRowSelection = true } = props;
+	const { paginationConfig = false, config, isRowSelection = true, tableLeftButton = <></> } = props;
 	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
 	const liveTableRef = useRef<HTMLDivElement & { selectedRowKeys: Function }>(null);
 	let [data, setData] = useState<Array<Record<string, unknown>>>([]);
@@ -74,7 +74,7 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 				data={data}
 				pagination={paginationConfig}
 				liveTableRender={props.liveTableRender || {}}
-				tableLeftButton={props?.tableLeftButton}
+				tableLeftButton={tableLeftButton}
 				isRowSelection={isRowSelection}
 			>
 			</LiveTable>

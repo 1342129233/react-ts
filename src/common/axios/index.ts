@@ -53,7 +53,6 @@ const responseHandler = (response: AxiosResponse<Response>) => {
                     isRefreshing = true;
                     // 调试刷新 token 的接口
                     return login({username: 'admin', password: 'macro123'}).then(res => {
-                        console.log(res);
                         const { token, tokenHead } = res.data;
                         const value = tokenHead + ' ' + token;
                         localStorage.setItem('token', value);

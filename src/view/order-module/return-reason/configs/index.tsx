@@ -8,27 +8,32 @@ export function tableConfig(params: { handleEdit: (val: DataType) => void, handl
         {
             key: 'id',
             value: '',
-            label: '编号'
+            label: '编号',
+            table: {}
         },
         {
             key: 'name',
             value: '',
-            label: '原因类型'
+            label: '原因类型',
+            table: {}
         },
         {
             key: 'sort',
             value: '',
             label: '排序',
+            table: {}
         },
         {
             key: 'status',
             value: '',
             label: '是否可用',
+            table: {}
         },
         {
             key: 'createTime',
             value: '',
             label: '添加时间',
+            table: {}
         },
         {
             key: 'operation',

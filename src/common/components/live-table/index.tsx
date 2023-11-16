@@ -103,7 +103,7 @@ const LiveTable = (props: Props, ref: Ref<unknown>) => {
 		<div className="mgt10">
 			{
 				tablePopover ? <div className={styles.tableTop}>
-					<div>{props.tableLeftButton}</div>
+					<Space>{props.tableLeftButton}</Space>
 					<div className='mgb10'>
 						<Affix offsetTop={10}>
 							<Popover placement="right" title={'修改表格展示内容'} content={content} trigger="click">

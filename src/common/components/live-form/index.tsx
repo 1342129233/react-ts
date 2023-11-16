@@ -1,5 +1,5 @@
 import React, { useEffect, useImperativeHandle, Ref, useRef, forwardRef, useState } from 'react';
-import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col, Radio, Upload } from 'antd';
+import { Steps, Button, Checkbox, Form, Input, Cascader, Select, Switch, Row, Col, Radio, Upload, DatePicker } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import type { FormInstance } from 'antd/es/form';
 import styles from './css/index.module.less';
@@ -118,6 +118,9 @@ function LiveForm(props: any, ref: Ref<unknown>) {
 					))
 				}
 			</Radio.Group>
+		}
+		if(item.tag === 'datePicker') {
+			return <DatePicker format="YYYY-MM-DD HH:mm:ss" />
 		}
 		return <></>
 	}
