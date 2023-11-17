@@ -108,6 +108,7 @@ function SpecialRecommendation() {
 					fetchConfig: fetchConfig
 				}}
 				tableLeftButton={tableLeftButton()}
+				formName="StandardPage1"
 			></StandardPage>
 			<SortDrawer
 				ref={sortDrawerRef}

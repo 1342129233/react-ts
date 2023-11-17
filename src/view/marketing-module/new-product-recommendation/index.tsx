@@ -108,6 +108,7 @@ function NewProductRecommendation() {
 					fetchConfig: fetchConfig
 				}}
 				tableLeftButton={tableLeftButton()}
+				formName="StandardPage1"
 			></StandardPage>
 			<SortDrawer
 				ref={sortDrawerRef}

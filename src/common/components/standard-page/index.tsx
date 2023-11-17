@@ -8,6 +8,7 @@ import { EffectJsonFormConfig, JsonDatePickerConfig } from '@/common/components/
 import { usePage, PageType, PaginationProps } from '@/common/hooks/usePage';
 
 function StandardPage(props: Props, ref: Ref<unknown>) {
+	const { formName="liveSearch" } = props;
 	const { paginationConfig = false, config, isRowSelection = true, tableLeftButton = <></> } = props;
 	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
 	const liveTableRef = useRef<HTMLDivElement & { selectedRowKeys: Function }>(null);
@@ -67,6 +68,7 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 				ref={liveSeachRef}
 				config={props.config.rows}
 				isPreAdd={false}
+				formName={formName}
 				onUpdateSearch={() => onSelect({pageNum: 1,pageSize: page.pageSize })}
 			></LiveSearch>
 			<LiveTable
@@ -97,6 +99,7 @@ interface Props {
 	liveTableRender?: any;
 	tableLeftButton?: JSX.Element;
 	isRowSelection?: boolean;
+	formName?: string
 }
 
 

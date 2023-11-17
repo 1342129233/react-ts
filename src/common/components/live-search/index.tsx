@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { EffectJsonFormConfig, JsonDatePickerConfig } from './types/index';
 
 const LiveSearch = (props: Props, ref: Ref<unknown>) => {
+	const { formName } = props;
 	const [form] = Form.useForm();
 	const formRef = React.useRef<FormInstance>(null);
 	const [isPreAdd, setIsPreAdd] = useState(false);
@@ -65,7 +66,7 @@ const LiveSearch = (props: Props, ref: Ref<unknown>) => {
 	}
 	return (
 		<div>
-			<Form form={form} name="horizontal_login" onFinish={onFinish} ref={formRef}>
+			<Form form={form} name={formName} onFinish={onFinish} ref={formRef}>
 				<Row gutter={2}>
 					{
 						props.config.map((item: EffectJsonFormConfig) => {
@@ -125,6 +126,7 @@ interface Props {
 	onUpdateSearch: (value?: Record<string, unknown>) => void,
 	onPreAdd?: () => void
 	isPreAdd?: boolean
+	formName: string
 }
 
 export default forwardRef<HTMLDivElement, Props>(LiveSearch);

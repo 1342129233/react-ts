@@ -54,6 +54,7 @@ function SpecialSubjectDrawer(props: PropsType, ref: Ref<unknown>) {
                 fetchConfig: fetchConfig
             }}
             tableLeftButton={<></>}
+            formName="StandardPage2"
         ></StandardPage>
     </TheDrawer>
 }
