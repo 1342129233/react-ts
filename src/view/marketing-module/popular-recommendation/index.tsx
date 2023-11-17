@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { Button, message } from 'antd';
 import StandardPage from '@/common/components/standard-page/index';
 import SortDrawer from './components/sort-drawer/index';
-import SpecialSubjectDrawer from './components/special-subject-drawer/index';
+import ProductDrawer from './components/product-drawer/index';
 import { fetchConfig, updateRecommendStatus, recommendSubjecDelete } from './server';
 import { standardPageModel } from './configs';
 import { UpdateStatusType, DataType } from './types';
@@ -12,7 +12,7 @@ import { isArray } from 'lodash';
 function PopularRecommendation() {
 	const standardPageRef = useRef<HTMLDivElement & { select: Function, tableSelectedRowKeys: Function }>();
 	const sortDrawerRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
-	const specialSubjectDrawerRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
+	const ProductDrawerRef = useRef<HTMLDivElement & { isOpen: Function }>(null);
 	const [form, setForm] = useState({
 		id: 0,
 		sort: 0
@@ -87,7 +87,7 @@ function PopularRecommendation() {
 		standardPageRef.current?.select();
 	}
 	const specialSubject = () => {
-		specialSubjectDrawerRef.current?.isOpen()
+		ProductDrawerRef.current?.isOpen()
 	}
 
 	const { rows } = standardPageModel({ updateStatus, handleSort, handleDelete });
@@ -114,7 +114,7 @@ function PopularRecommendation() {
 				form={form}
 				getList={returnReasonList}
 			></SortDrawer>
-			<SpecialSubjectDrawer ref={specialSubjectDrawerRef} getList={returnReasonList}></SpecialSubjectDrawer>
+			<ProductDrawer ref={ProductDrawerRef} getList={returnReasonList}></ProductDrawer>
 		</div>
 	);
 }

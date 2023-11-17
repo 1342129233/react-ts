@@ -93,7 +93,7 @@ export function standardPageModel(params: { updateStatus: (value: UpdateStatusTy
                     </Space>
                 }
             }
-        },
+        }
     ] as EffectJsonFormConfig[];
     return {
         rows

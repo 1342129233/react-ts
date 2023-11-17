@@ -50,6 +50,7 @@ function TheDrawer(props: Props) {
 			size={size}
 			onClose={onClose} 
 			open={open}
+			destroyOnClose={true}
 			className={styles.theDrawer}
 			style={{ paddingBottom: !showFooter ? '80px' : '20px' }}
 		>

@@ -3,7 +3,7 @@ import { SubjectListResolve, RecommendSubjectCreateParams } from '../types';
  
 // 获取专题列表
 export function fetchConfig(params: { pageNum: number; pageSize: number; }) {
-    return get<SubjectListResolve>(`/api/subject/list?pageNum=1&pageSize=5`, { ...params })
+    return get<SubjectListResolve>(`/api/subject/list`, { ...params })
 }
 
 // 提交选中专题
