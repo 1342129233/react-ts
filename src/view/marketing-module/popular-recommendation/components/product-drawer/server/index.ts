@@ -2,7 +2,7 @@ import { get, post, Response } from '@/common/axios';
 import { SubjectListResolve, RecommendSubjectCreateParams } from '../types';
  
 // 获取专题列表
-export function fetchConfig(params: { pageNum: number; pageSize: number; }) {
+export function fetchConfig(params: { pageNum: number; pageSize: number; keyword?: string  }) {
     return get<SubjectListResolve>(`/api/product/list`, { ...params })
 }
 
