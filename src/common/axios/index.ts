@@ -97,7 +97,7 @@ export const get = <T, P=Record<string, unknown>>(url: string, params?: P, confi
     return instance.get<T>(url, { params, ...config });
 }
 
-export const post = <T, P=FormData | Record<string, unknown>>(url: string, params?: P, config?: AxiosConfig) => {
+export const post = <T, P=FormData | Record<string, unknown> | unknown>(url: string, params?: P, config?: AxiosConfig) => {
     return instance.post<T>(url, params, config);
 };
 
