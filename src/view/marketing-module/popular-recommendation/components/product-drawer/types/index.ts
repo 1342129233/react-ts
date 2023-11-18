@@ -32,7 +32,7 @@ export interface DataType {
 }
 
 export interface RecommendSubjectCreateParams {
-    subjectId: number;
-    subjectName: string;
+    productId: number;
+    productName: string;
 }
 

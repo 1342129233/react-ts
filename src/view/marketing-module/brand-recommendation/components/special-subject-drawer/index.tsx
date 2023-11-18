@@ -3,10 +3,10 @@ import { message } from 'antd';
 import TheDrawer from '@/common/components/the-drawer/index';
 import StandardPage from '@/common/components/standard-page/index';
 import { standardPageModel } from './configs';
-import { fetchConfig, recommendProductCreate } from './server';
+import { fetchConfig, recommendSubjectCreate } from './server';
 import { DataType, RecommendSubjectCreateParams } from './types';
 
-function ProductDrawer(props: PropsType, ref: Ref<unknown>) {
+function SpecialSubjectDrawer(props: PropsType, ref: Ref<unknown>) {
     const { getList } = props;
     const standardPageRef = useRef<HTMLDivElement & { select: Function, tableSelectedRowKeys: Function, tableData: unknown[] }>();
     const [openDrawer, setOpenDrawer] = useState(false);
@@ -22,12 +22,12 @@ function ProductDrawer(props: PropsType, ref: Ref<unknown>) {
         const recommendSubjectData: RecommendSubjectCreateParams[] = [];
         list.forEach((item: DataType) => {
             recommendSubjectData.push({
-                productId: item.id,
-                productName: item.name
+                brandId: item.id,
+                brandName: item.name
             })
         })
         try {
-			await recommendProductCreate(recommendSubjectData);
+			await recommendSubjectCreate(recommendSubjectData);
             getList();
 		} catch(error: any) {
 			message.error(error?.message || '请求失败')
@@ -42,7 +42,7 @@ function ProductDrawer(props: PropsType, ref: Ref<unknown>) {
 	})
     const { rows } = standardPageModel();
     return <TheDrawer
-        title="选择商品"
+        title="选择品牌"
         open={openDrawer}
         onOpenClose={(value) => setOpenDrawer(value)}
         onSave={() => onSubmit()}
@@ -63,4 +63,4 @@ interface PropsType {
     getList: () => void;
 }
 
-export default forwardRef<HTMLDivElement, PropsType>(ProductDrawer);
+export default forwardRef<HTMLDivElement, PropsType>(SpecialSubjectDrawer);

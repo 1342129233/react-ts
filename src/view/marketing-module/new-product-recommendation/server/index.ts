@@ -8,7 +8,12 @@ export function fetchConfig(params: FetchConfigParams) {
 
 // 是否推荐
 export function updateRecommendStatus(params: UpdateStatusType) {
-    return post<Response>(`home/newProduct/update/recommendStatus`, { ...params });
+    const formData = new window.FormData();
+    formData.append('ids', params.ids + '');
+    formData.append('recommendStatus', params.recommendStatus + '');
+    return post<Response>(`/api/home/newProduct/update/recommendStatus`, formData, { headers: {
+        'Content-Type': 'multipart/form-data'
+    } });
 }
 
 // 批量删除
