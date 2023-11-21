@@ -74,7 +74,7 @@ export function standardPageModel(params: { updateStatus: (value: UpdateStatusTy
         {
             key: 'config',
             value: '',
-            label: '操作:',
+            label: '操作',
             placeholder: '',
             table: {
                 render: (_: DataType, record: DataType) => {

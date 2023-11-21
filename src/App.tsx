@@ -61,12 +61,12 @@ function App() {
 	}
 	// 判断顶部 tabs 是否存在不存在则加到最后(多级路由需要抹平层级)
 	const isTopTabs = (key: string) => {
-		const isTab = itemTabs.filter((item) => (item.key === key));
-		if(isTab.length === 0) {
-			const tabs = routersList.filter(item => item.key === key)[0];
+		const isTab = itemTabs.find((item) => (item.key === key));
+		if(isTab) {
+			const tabs = routersList.find(item => item.key === key);
 			itemTabs.push({
-				label: tabs.label,
-				key: tabs.path
+				label: tabs?.label || '',
+				key: tabs?.path || ''
 			})
 			setItemTabs([...itemTabs])
 		}

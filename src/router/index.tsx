@@ -67,17 +67,17 @@ const lazyLoad = (children: ReactNode): ReactNode =>{
   
 
 const router: RouterType[] = [
-    // {
-    //     path: '/',
-    //     label: '',
-    //     key: '/',
-    //     icon: <HomeOutlined />,
-    //     element: <Navigate to="/home" />,
-    //     meta: {
-    //         invisible: true,
-    //         path: ['']
-    //     }
-    // },
+    {
+        path: '/',
+        label: '',
+        key: '/',
+        icon: <HomeOutlined />,
+        element: <Navigate to="/home" />,
+        meta: {
+            invisible: true,
+            path: ['']
+        }
+    },
     {
         path: '/home',
         label: '首页',
@@ -310,7 +310,7 @@ const router: RouterType[] = [
     {
         path: '/authority-module',
         label: '权限模块',
-        key: 'authority-module',
+        key: '/authority-module',
         icon: <VerifiedOutlined />,
         meta: {
             path: ['权限模块']
@@ -318,42 +318,42 @@ const router: RouterType[] = [
         children: [
             {
                 path: '/authority-module/user-authority',
-                label: '用户授权',
-                key: 'authority-module/user-authority',
+                label: '用户列表',
+                key: '/authority-module/user-authority',
                 icon: <UserOutlined />,
                 element: lazyLoad(<UserAuthority />),
                 meta: {
-                    path: ['权限模块', '用户授权']
+                    path: ['权限模块', '用户列表']
                 }
             },
             {
                 path: '/authority-module/characters-authority',
-                label: '角色授权',
-                key: 'authority-module/characters-authority',
+                label: '角色列表',
+                key: '/authority-module/characters-authority',
                 icon: <TeamOutlined />,
                 element: lazyLoad(<CharactersAuthority />),
                 meta: {
-                    path: ['权限模块', '角色授权']
+                    path: ['权限模块', '角色列表']
                 }
             },
             {
                 path: '/authority-module/menu-authority',
-                label: '菜单授权',
-                key: 'authority-module/menu-authority',
+                label: '菜单列表',
+                key: '/authority-module/menu-authority',
                 icon: <AppstoreOutlined />,
                 element: lazyLoad(<MenuAuthority />),
                 meta: {
-                    path: ['权限模块', '菜单授权']
+                    path: ['权限模块', '菜单列表']
                 }
             },
             {
                 path: '/authority-module/assets-authority',
-                label: '资源授权',
-                key: 'authority-module/assets-authority',
+                label: '资源列表',
+                key: '/authority-module/assets-authority',
                 icon: <UngroupOutlined />,
-                element: lazyLoad(<AuditOutlined />),
+                element: lazyLoad(<AssetsAuthority />),
                 meta: {
-                    path: ['权限模块', '资源授权']
+                    path: ['权限模块', '资源列表']
                 }
             }
         ]
