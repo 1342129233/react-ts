@@ -35,3 +35,46 @@ export const recommendStatusMap: { [key in recommendStatusEnum]: string } = {
     [recommendStatusEnum.CANCEL]: '未推荐',
     [recommendStatusEnum.VERIFY]: '推荐'
 }
+
+
+// 适用平台
+export enum platformEnum {
+    ALL = 0,
+    MOVE = 1,
+    PC = 2
+}
+
+export const platformTypeMap: { [key in platformEnum]: string } = {
+    [platformEnum.ALL]: '全平台',
+    [platformEnum.MOVE]: '移动平台',
+    [platformEnum.PC]: 'PC平台'
+}
+
+// 优惠券类型
+export enum couponEnum {
+    ALL = 0,
+    MEMBER = 1,
+    SHOP = 2,
+    SIGN_IN = 3
+}
+
+export const couponTypeMap: { [key in couponEnum]: string } = {
+    [couponEnum.ALL]: '全场赠券',
+    [couponEnum.MEMBER]: '会员赠券',
+    [couponEnum.SHOP]: '购物赠券',
+    [couponEnum.SIGN_IN]: '注册赠券'
+}
+
+// 可使用商品
+export enum usableProductEnum {
+    ALL = 0,
+    APPOINT_TYPE = 1,
+    APPOINT_PRODUCT = 2
+}
+
+
+export const usableProductTypeMap: { [key in usableProductEnum]: string } = {
+    [usableProductEnum.ALL]: '全场通用',
+    [usableProductEnum.APPOINT_TYPE]: '指定分类',
+    [usableProductEnum.APPOINT_PRODUCT]: '指定商品'
+}
