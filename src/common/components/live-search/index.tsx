@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { EffectJsonFormConfig, JsonDatePickerConfig } from './types/index';
 
 const LiveSearch = (props: Props, ref: Ref<unknown>) => {
-	const { formName } = props;
+	const { formName, isLiveSearchRequest = true } = props;
 	const [form] = Form.useForm();
 	const formRef = React.useRef<FormInstance>(null);
 	const [isPreAdd, setIsPreAdd] = useState(false);
@@ -89,7 +89,7 @@ const LiveSearch = (props: Props, ref: Ref<unknown>) => {
 							}
 						})
 					}
-					<Col className="gutter-row" sm={24} md={12} lg={8} xl={6}>
+					{ isLiveSearchRequest ? <Col className="gutter-row" sm={24} md={12} lg={8} xl={6}>
 						<Form.Item>
 							<Button type="primary" htmlType="submit">
 								搜 索
@@ -102,7 +102,7 @@ const LiveSearch = (props: Props, ref: Ref<unknown>) => {
 								重 置
 							</Button>
 						</Form.Item>
-					</Col>
+					</Col> : null }
 				</Row>
 			</Form>
 			{
@@ -127,6 +127,7 @@ interface Props {
 	onPreAdd?: () => void
 	isPreAdd?: boolean
 	formName: string
+	isLiveSearchRequest?: boolean
 }
 
 export default forwardRef<HTMLDivElement, Props>(LiveSearch);

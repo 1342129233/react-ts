@@ -8,7 +8,7 @@ import { EffectJsonFormConfig, JsonDatePickerConfig } from '@/common/components/
 import { usePage, PageType, PaginationProps } from '@/common/hooks/usePage';
 
 function StandardPage(props: Props, ref: Ref<unknown>) {
-	const { formName="liveSearch", tablePopover = true } = props;
+	const { formName="liveSearch", tablePopover = true, isPreAdd= false, isLiveSearchRequest = true } = props;
 	const { paginationConfig = false, config, isRowSelection = true, tableLeftButton = <></> } = props;
 	const liveSeachRef = useRef<HTMLDivElement & { getFormValue: Function }>(null);
 	const liveTableRef = useRef<HTMLDivElement & { selectedRowKeys: Function }>(null);
@@ -19,16 +19,18 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 		const params = config.formateSearchParams?.(searchParamsRef.current) ?? searchParamsRef.current;
 		try {
 			const res = await config.fetchConfig(params);
-			data = res.data.list;
-			setData([...data]);
-			setPage((prev) => {
-				return {
-					...prev,
-					pageNum: res.data.pageNum,
-					pageSize: res.data.pageSize,
-					total: res.data.total
-				}
-			});
+			const dataList = config.formateSearchResolve ? config.formateSearchResolve(res) : res.data.list;
+			setData([...dataList]);
+			if(paginationConfig) {
+				setPage((prev) => {
+					return {
+						...prev,
+						pageNum: res.data.pageNum,
+						pageSize: res.data.pageSize,
+						total: res.data.total
+					}
+				});
+			}
 		} catch(error: any) {
 			message.error(error?.message || '请求失败')
 		}
@@ -67,8 +69,9 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 			<LiveSearch
 				ref={liveSeachRef}
 				config={props.config.rows}
-				isPreAdd={false}
+				isPreAdd={isPreAdd}
 				formName={formName}
+				isLiveSearchRequest={isLiveSearchRequest}
 				onUpdateSearch={() => onSelect({pageNum: 1,pageSize: page.pageSize })}
 			></LiveSearch>
 			<LiveTable
@@ -82,7 +85,9 @@ function StandardPage(props: Props, ref: Ref<unknown>) {
 				tablePopover={tablePopover}
 			>
 			</LiveTable>
-			<LivePagination pagination={ paginationProps } page={page} />
+			{
+				paginationConfig ? <LivePagination pagination={ paginationProps } page={page} /> : null
+			}
 		</div>
 	);
 }
@@ -92,6 +97,7 @@ interface Props {
 		rows: Array<EffectJsonFormConfig>,
 		fetchConfig: Function,
 		formateSearchParams?: (params: any)=> unknown,
+		formateSearchResolve?: (params: any)=> unknown
 	},
 	paginationConfig?: TablePaginationConfig | false;
 	onPreAdd?: () => void;
@@ -102,6 +108,7 @@ interface Props {
 	isRowSelection?: boolean;
 	formName?: string
 	tablePopover?: boolean;
+	isLiveSearchRequest?: boolean
 }
 
 

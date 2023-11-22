@@ -56,6 +56,8 @@ const UserAuthority = lazy(() => import("@/view/authority-module/user-authority/
 const CharactersAuthority = lazy(() => import("@/view/authority-module/characters-authority/index"))
 const MenuAuthority = lazy(() => import("@/view/authority-module/menu-authority/index"))
 const AssetsAuthority = lazy(() => import("@/view/authority-module/assets-authority/index"))
+const ResourceCategory = lazy(() => import("@/view/authority-module/resource-category/index"))
+
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -354,6 +356,16 @@ const router: RouterType[] = [
                 element: lazyLoad(<AssetsAuthority />),
                 meta: {
                     path: ['权限模块', '资源列表']
+                }
+            },
+            {
+                path: '/authority-module/resource-category',
+                label: '资源分类',
+                key: '/authority-module/resource-category',
+                icon: <UngroupOutlined />,
+                element: lazyLoad(<ResourceCategory />),
+                meta: {
+                    path: ['权限模块', '资源分类']
                 }
             }
         ]
