@@ -40,9 +40,6 @@ function TheDrawer(props: Props) {
 		})
 	}
 
-	useEffect(() => {
-		console.log('Drawer')
-	}, [])
 	return (
 		<Drawer 
 			title={title} 

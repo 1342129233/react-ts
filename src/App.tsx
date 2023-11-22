@@ -1,5 +1,5 @@
 import React, { Suspense, useState, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation, matchRoutes, Outlet } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation, matchRoutes, Outlet, Navigate } from 'react-router-dom';
 import { router, filterMenu } from '@/router/index';
 import { RouterType } from '@/router/type';
 import {
@@ -61,15 +61,20 @@ function App() {
 	}
 	// 判断顶部 tabs 是否存在不存在则加到最后(多级路由需要抹平层级)
 	const isTopTabs = (key: string) => {
+		
 		const isTab = itemTabs.find((item) => (item.key === key));
 		if(isTab) {
-			const tabs = routersList.find(item => item.key === key);
-			itemTabs.push({
-				label: tabs?.label || '',
-				key: tabs?.path || ''
-			})
-			setItemTabs([...itemTabs])
+			return;
 		}
+		const tabs = routersList.find(item => item.key === key);
+		if(!tabs) {
+			return;
+		}
+		itemTabs.push({
+			label: tabs.label || '',
+			key: tabs.path || ''
+		})
+		setItemTabs([...itemTabs])
 	}
 	// 左侧路由点击
 	const menuClick = (e: { key: string }) => {
@@ -78,10 +83,12 @@ function App() {
 		isTopTabs(e.key)
 	}
 
-
 	// tab
 	const onChange = (newActiveKey: string) => {
-		toggleRouter(newActiveKey)
+		if(location.pathname === newActiveKey) {
+			return
+		}
+		toggleRouter(newActiveKey);
 	}
 	const onEdit = (targetKey: React.MouseEvent | React.KeyboardEvent | string) => {
 		let newActiveKey = '';
@@ -228,6 +235,7 @@ function App() {
 								</Route>
 							))
 						}
+						<Route path="*" element={<Navigate to="/home" />}/>
 					</Routes>
 				</Content>
 			</Layout>

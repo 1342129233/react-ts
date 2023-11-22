@@ -69,17 +69,17 @@ const lazyLoad = (children: ReactNode): ReactNode =>{
   
 
 const router: RouterType[] = [
-    {
-        path: '/',
-        label: '',
-        key: '/',
-        icon: <HomeOutlined />,
-        element: <Navigate to="/home" />,
-        meta: {
-            invisible: true,
-            path: ['']
-        }
-    },
+    // {
+    //     path: '/',
+    //     label: '',
+    //     key: '/',
+    //     icon: <HomeOutlined />,
+    //     element: <Navigate to="/home" />,
+    //     meta: {
+    //         invisible: true,
+    //         path: ['']
+    //     }
+    // },
     {
         path: '/home',
         label: '首页',
