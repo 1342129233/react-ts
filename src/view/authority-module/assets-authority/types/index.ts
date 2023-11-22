@@ -14,7 +14,7 @@ export interface DataType {
     categoryId: string | number;
     createTime: string;
     description: string;
-    id: number;
+    id?: number;
     name: string;
     url: string;
 }

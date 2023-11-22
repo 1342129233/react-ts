@@ -46,7 +46,7 @@ const LiveSearch = (props: Props, ref: Ref<unknown>) => {
 		if(item?.search?.type === 'select') {
 			const selectOptions = item.search?.options || [];
 			return (
-				<Select options={selectOptions} placeholder={item.placeholder} />
+				<Select options={selectOptions} placeholder={item.placeholder} allowClear />
 			)
 		}
 		if(item?.search?.type === 'cascader') {

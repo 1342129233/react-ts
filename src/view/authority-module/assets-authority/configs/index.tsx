@@ -1,10 +1,27 @@
+import React, { useState, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { Button, Space, Popconfirm } from 'antd';
-import { EffectJsonFormConfig } from '@/common/components/live-search/types/index';
+import { EffectJsonFormConfig, SelectOptions } from '@/common/components/live-search/types/index';
+import { resourceCategory } from '@/common/public-fetch/resourceCategory';
 import { DataType } from '../types';
 
 export function standardPageModel(params: { handleEdit: (value: DataType) => void, handleDelete: (value: number) => void } ) {
     const { handleEdit, handleDelete } = params;
+    const [options, setOptions] = useState<SelectOptions[]>([]);
+    const getResourceCategory = async () => {
+        const res = await resourceCategory();
+        const list: SelectOptions[] = []
+        res.data.forEach(item => {
+            list.push({
+                value: item.id,
+                label: item.name
+            });
+            setOptions([...list]);
+        });
+    }
+    useEffect(() => {
+        getResourceCategory()
+    }, [])
     
     const rows = [
         {
@@ -50,7 +67,7 @@ export function standardPageModel(params: { handleEdit: (value: DataType) => voi
             placeholder: '全部',
             search: {
                 type: 'select',
-                options: []
+                options: options
             }
         },
         {
@@ -86,7 +103,7 @@ export function standardPageModel(params: { handleEdit: (value: DataType) => voi
                         >
                             编辑
                         </Button>
-                        <Popconfirm title="请确认删除?" onConfirm={() => handleDelete(record.id)}>
+                        <Popconfirm title="请确认删除?" onConfirm={() => handleDelete(record.id!)}>
                             <Button type="link">
                                 删除
                             </Button>
@@ -97,8 +114,13 @@ export function standardPageModel(params: { handleEdit: (value: DataType) => voi
         }
     ] as EffectJsonFormConfig[];
 
+    const memoizedValue = useMemo(() => {
+        return rows
+      }, [options]);
+      
     return {
-        rows
+        rows: memoizedValue,
+        options
     }
 }
 
