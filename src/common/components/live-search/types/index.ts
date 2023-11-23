@@ -8,7 +8,7 @@ export type SelectOptions = {
 }
 
 export type JsonFormConfig = {
-    key: React.Key;
+    key: string;
     value: unknown
     label: string
     hidden?: boolean

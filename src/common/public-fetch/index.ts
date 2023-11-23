@@ -6,3 +6,5 @@ export { prefrenceAreaList } from './prefrenceArea';
 export { ressList } from './ressList';
 export type { RessListType } from './ressList';
 export { productSimpleList } from './product-simple';
+export { roleListAll } from './roleList';
+export type { RoleType } from './roleList';
