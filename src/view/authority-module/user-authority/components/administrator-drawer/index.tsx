@@ -11,7 +11,7 @@ function AdministratorDrawer(props: PropsType, ref: Ref<unknown>) {
     const [roleList, setRoleList] = useState<RoleType[]>([]);
     const [dataInfo, setDataInfo] = useState<FormData>({
         adminId: '',
-        roleIds: ''
+        roleIds: []
     });
 
     const onSubmit = async () => {
@@ -32,10 +32,13 @@ function AdministratorDrawer(props: PropsType, ref: Ref<unknown>) {
     const getAdminRole = async () => {
         try {
 			const res = await adminRoleId(id!);
-            const data = res.data[0];
+            const data: number[] = [];
+            res.data.forEach(item => {
+                data.push(item.id);
+            })
             setDataInfo({
                 adminId: id!,
-                roleIds: data.id
+                roleIds: [...data]
             })
 		} catch(error: any) {
 			message.error(error.message || '请求失败')
@@ -51,10 +54,10 @@ function AdministratorDrawer(props: PropsType, ref: Ref<unknown>) {
 			message.error(error?.message || '请求失败')
 		}
     }
-    const handleChange = (value: number) => {
+    const handleChange = (value: number[]) => {
         setDataInfo(prev => ({
             ...prev,
-            roleIds: value
+            roleIds: [...value]
         }))
     };
     useEffect(() => {
@@ -71,7 +74,8 @@ function AdministratorDrawer(props: PropsType, ref: Ref<unknown>) {
         onSave={() => onSubmit()}
     >
         <Select
-            value={+dataInfo.roleIds}
+            value={dataInfo.roleIds as number[]}
+            mode="multiple"
             style={{ width: 300 }}
             allowClear
             onChange={handleChange}

@@ -16,5 +16,5 @@ export interface AdminRoleIdResolve extends Response {
 
 export interface FormData {
     adminId: string | number;
-    roleIds: string | number;
+    roleIds: string | number[];
 }
