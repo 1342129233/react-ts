@@ -22,4 +22,3 @@ export const allocResource = (form: ResourceIdsParams) => {
     } });
 }
 
-

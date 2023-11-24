@@ -7,7 +7,7 @@ import { Options } from '../../types';
 const CheckboxGroup = Checkbox.Group;
 
 function CardCheck(props: PropsType, ref: Ref<unknown>) {
-    const { id, resourceData } = props;
+    const { id, resourceData, item, data } = props;
 
     const [optionsItem, setOptionsItem] = useState<Options[]>([]);
     const [checkedList, setCheckedList] = useState<CheckboxValueType[]>([]);
@@ -28,30 +28,48 @@ function CardCheck(props: PropsType, ref: Ref<unknown>) {
         setOptionsItem([...list])
     }, [id, resourceData])
 
+    useEffect(() => {
+        const list = data[id] || [];
+        setCheckedList([...list])
+     }, [data])
+
     useImperativeHandle(ref, () => {
 		return {
-            checkAll: optionsItem.length === checkedList.length,
-            checkedList: checkedList,
-            optionsItem: optionsItem,
-			indeterminate: checkedList.length > 0 && checkedList.length < optionsItem.length,
-            checkAllChange: (e: CheckboxChangeEvent) => { 
-                const list: number[] = [];
-                optionsItem.forEach(item => {
-                    list.push(item.value)
-                });
-                setCheckedList(e.target.checked as boolean ? [...list] : []); 
-                
-            }
+            checkedList: checkedList
 		}
 	})
+    const indeterminate = checkedList.length > 0 && checkedList.length < optionsItem.length;
+    const checkAll = optionsItem.length === checkedList.length;
+    const onCheckAllChange = (e: CheckboxChangeEvent) => {
+        const list: CheckboxValueType[] = [];
+        if(e.target.checked) {
+            optionsItem.forEach((item) => {
+                list.push(item.value)
+            })
+            setCheckedList([...list]);
+            return;
+        }
+        setCheckedList([]);
+    };
     return (
-        <CheckboxGroup options={optionsItem} value={checkedList} onChange={onChange} />
+        <Card
+            style={{ marginTop: 16 }}
+            key={item.value}
+            type="inner"
+            title={<Checkbox indeterminate={indeterminate} onChange={onCheckAllChange} checked={checkAll}>
+                { item.label }
+            </Checkbox>}
+        >
+            <CheckboxGroup options={optionsItem} value={checkedList} onChange={onChange} />
+        </Card>
     );
 }
 
 interface PropsType {
     resourceData: Options[]
+    item: Options
     id: number;
+    data: { [key in number]: number[] }
 }
 
 export default forwardRef<HTMLDivElement, PropsType>(CardCheck);

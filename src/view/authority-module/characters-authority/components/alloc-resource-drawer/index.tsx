@@ -8,25 +8,30 @@ import { resourceCategoryAll, resourceAll, listResourceId, allocResource } from 
 import { ResourceCategoryDataType, ResourceResolveDataType, Options  } from './types';
 
 
-
-
 function AllocResourceDrawer(props: PropsType, ref: Ref<unknown>) {
     const { id } = props;
-    // const cardCheckRefs = useRef<Array<HTMLDivElement & { optionsItem: Options[], indeterminate: boolean, checkAll: boolean, checkAllChange: Function, checkedList: CheckboxValueType[] }>>([]);
-    const cardCheckRefs = useRef<any[]>([]);
-    const [openDrawer, setOpenDrawer] = useState(true);
+    const CardCheckRefList = useRef<Array<HTMLDivElement & { checkedList: number[] }>>([]);
+    const [openDrawer, setOpenDrawer] = useState(false);
     const [resourceCategoryData, setResourceCategoryData] = useState<Options[]>([]);
     const [resourceData, setResourceData] = useState<Options[]>([]);
-    const [listResourceData, setListResourceData] = useState<Options[]>([]);
-    const getRef=(dom: HTMLElement | null, index: number)=>{
-        cardCheckRefs.current[index] = dom;
-        // console.log(333, cardCheckRefs.current);
+    const [listResourceData, setListResourceData] = useState<{ [key in number]: number[] }>({});
+    const getRef=(ele: HTMLDivElement & { checkedList: number[] }, i:number)=>{
+        CardCheckRefList.current[i] = ele
     }
-
     const onSubmit = async () => {
+        console.log(CardCheckRefList.current)
+        let resourceIdList: number[] = [];
+        const cardCheckRef= CardCheckRefList.current;
+        cardCheckRef.forEach((item: { checkedList: number[] }) => {
+            resourceIdList = resourceIdList.concat(item.checkedList)
+        })
+        const resourceAll = {
+            roleId: id!,
+            resourceIds: resourceIdList.toString()
+        }
         try {
-			// await allocResource();
-            // setOpenDrawer(false);
+			await allocResource(resourceAll);
+            setOpenDrawer(false);
 		} catch(error: any) {
 			message.error(error?.message || '请求失败')
 		}
@@ -70,10 +75,17 @@ function AllocResourceDrawer(props: PropsType, ref: Ref<unknown>) {
     }
     const getResourceId = async () => {
         try {
-			const res = await listResourceId(1);
-            // setListResourceData([
-            //     ...res.data
-            // ])
+			const res = await listResourceId(id!);
+            const list: { [key in number]: number[] } = {};
+            res.data.forEach((item) => {
+                if(!list[item.categoryId]) {
+                    list[item.categoryId] = [];
+                }
+                list[item.categoryId].push(item.id)
+            })
+            setListResourceData({
+                ...list
+            })
 		} catch(error: any) {
 			message.error(error?.message || '请求失败')
 		}
@@ -103,19 +115,6 @@ function AllocResourceDrawer(props: PropsType, ref: Ref<unknown>) {
 		}
 	})
 
-    const onCheckAllChange = (e: CheckboxChangeEvent, index: number) => {
-        cardCheckRefs.current[index].checkAllChange(e);
-    };
-
-    const indeterminate = (index: number) => {
-        return cardCheckRefs.current[index]?.indeterminate
-    }
-
-    const checkAll = (index: number) => {
-        return cardCheckRefs.current[index]?.checkAll
-    }
-    
-
     return (
         <TheDrawer
             title="分配菜单"
@@ -123,24 +122,21 @@ function AllocResourceDrawer(props: PropsType, ref: Ref<unknown>) {
             onOpenClose={(value) => setOpenDrawer(value)}
             onSave={() => onSubmit()}
         >
-            {/* {
+            {
                 resourceCategoryData.length > 0
                 ?
                 resourceCategoryData.map((item: Options, index: number) => (
-                    <Card
-                        style={{ marginTop: 16 }}
-                        key={item.value}
-                        type="inner"
-                        title={<Checkbox indeterminate={indeterminate(index)} onChange={(e) => onCheckAllChange(e, index)} checked={checkAll(index)}>
-                            { item.label }
-                        </Checkbox>}
-                    >
-                        <CardCheck ref={(ele: HTMLElement | null) => getRef(ele, index)}   key={item.value} resourceData={resourceData} id={item.value} />
-                    </Card>
+                    <CardCheck
+                        key={item.label}
+                        ref={(dom: HTMLDivElement & { checkedList: number[] }) => getRef(dom, index)} 
+                        item={item} id={item.value} 
+                        resourceData={resourceData} 
+                        data={listResourceData} 
+                    />
                 ))
                 :
                 null
-            } */}
+            }
         </TheDrawer>
     )
 }
@@ -148,6 +144,5 @@ function AllocResourceDrawer(props: PropsType, ref: Ref<unknown>) {
 interface PropsType {
     id: number | null
 }
-// ref={getRef}
 
 export default forwardRef<HTMLDivElement, PropsType>(AllocResourceDrawer);

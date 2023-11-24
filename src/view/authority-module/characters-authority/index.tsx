@@ -22,7 +22,10 @@ function CharactersAuthority() {
 		allocMenuDrawerRef.current?.isOpen();
 	}
 	// 分配资源
-	const updateResource = (record: DataType) => {}
+	const updateResource = (record: DataType) => {
+		setMenuId(record.id!)
+		allocResourceDrawerRef.current?.isOpen();
+	}
 	// 编辑
 	const handleEdit = (record: DataType) => {
 		setData({
@@ -80,7 +83,7 @@ function CharactersAuthority() {
             ></StandardPage>
 			<EditDrawer ref={editDrawerRef} userData={data} getList={returnReasonList} />
 			<AllocMenuDrawer ref={allocMenuDrawerRef} id={menuId} />
-			<AllocResourceDrawer ref={allocResourceDrawerRef} id={1} />
+			<AllocResourceDrawer ref={allocResourceDrawerRef} id={menuId} />
 		</>
 	);
 }
