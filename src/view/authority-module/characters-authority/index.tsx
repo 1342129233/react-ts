@@ -6,7 +6,7 @@ import AllocMenuDrawer from './components/alloc-menu-drawer/index';
 import AllocResourceDrawer from './components/alloc-resource-drawer/index';
 import { roleList, roleDelete, roleUpdateStatus } from './server';
 import { standardPageModel } from './configs';
-import { DataType, updateStatus } from './types';
+import { DataType, UpdateStatus } from './types';
 
 function CharactersAuthority() {
 	const standardPageRef = useRef<HTMLDivElement & { select: Function, tableSelectedRowKeys: Function, tableData: unknown[] }>();
@@ -49,7 +49,7 @@ function CharactersAuthority() {
 		}
 	}
 	// 是否启用
-	const updateStatus = async (record: updateStatus) => {
+	const updateStatus = async (record: UpdateStatus) => {
 		try {
 			await roleUpdateStatus(record);
 			standardPageRef.current?.select()

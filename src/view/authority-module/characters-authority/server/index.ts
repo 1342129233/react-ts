@@ -1,5 +1,5 @@
 import { get, post, Response } from '@/common/axios';
-import { RoleResolve, updateStatus } from '../types';
+import { RoleResolve, UpdateStatus } from '../types';
 
 export const roleList= () => {
     return get<RoleResolve>('/api/role/list')
@@ -13,7 +13,7 @@ export const roleDelete= (id: number) => {
     } });
 }
 
-export const roleUpdateStatus = (params: updateStatus) => {
+export const roleUpdateStatus = (params: UpdateStatus) => {
     return get<RoleResolve>(`/api/role/updateStatus/${params.id}?status=${params.status}`,)
 }
 

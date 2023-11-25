@@ -14,7 +14,7 @@ export interface RoleResolve {
     data: DataType[];
 }
 
-export interface updateStatus {
+export interface UpdateStatus {
     id: number;
     status: number;
 }

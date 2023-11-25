@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { Button, Space, Popconfirm, Switch } from 'antd';
 import { EffectJsonFormConfig } from '@/common/components/live-search/types/index';
-import { DataType, updateStatus } from '../types';
+import { DataType, UpdateStatus } from '../types';
 
 export function standardPageModel(params: { 
     handleMenu: (record: DataType) => void, 
     handleEdit: (record: DataType) => void, 
     handleDelete: (id: number) => void, 
-    updateStatus: (record: updateStatus) => void, 
+    updateStatus: (record: UpdateStatus) => void, 
     updateResource: (record: DataType) => void
 }) {
     const { handleMenu, handleEdit, handleDelete, updateStatus, updateResource } = params;
