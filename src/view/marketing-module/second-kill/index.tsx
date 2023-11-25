@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Button, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import StandardPage from '@/common/components/standard-page/index';
 import ActivityDrawer from './components/activity-drawer/index';
 import { flashList, flashDelete, flashUpdateStatus } from './server';
@@ -9,14 +10,18 @@ import { info } from './components/activity-drawer/configs';
 import { FormData } from './components/activity-drawer/types';
 
 function SecondKill() {
+	const navigate = useNavigate();
 	const activityDrawer = useRef<HTMLDivElement & { isOpen: Function }>(null);
 	const standardPageRef = useRef<HTMLDivElement & { select: Function, tableSelectedRowKeys: Function }>();
 	const [data, setData] = useState<FormData>(info);
 	const tableLeftButton = ()  => {
 		return <>
-			<Button>秒杀时间短列表</Button>
+			<Button onClick={() => killTime()}>秒杀时间段列表</Button>
 			<Button onClick={() => createActive()}>添加活动</Button>
 		</>
+	}
+	const killTime = () => {
+		navigate(`/marketing-module/kill-time`)
 	}
 	const createActive = () => {
 		const value = {

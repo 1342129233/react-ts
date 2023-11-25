@@ -23,7 +23,8 @@ import {
     CalendarOutlined,
     SettingOutlined,
     FileExcelOutlined,
-    ImportOutlined
+    ImportOutlined,
+    ThunderboltOutlined
 } from '@ant-design/icons';
 import { RouterType } from './type';
 
@@ -45,6 +46,7 @@ const ReturnReason = lazy(() => import("@/view/order-module/return-reason/index"
 
 
 const SecondKill = lazy(() => import("@/view/marketing-module/second-kill/index"))
+const KillTime = lazy(() => import("@/view/marketing-module/kill-time/index"))
 const CouponList = lazy(() => import("@/view/marketing-module/coupon-list/index"))
 const BrandRecommendation = lazy(() => import("@/view/marketing-module/brand-recommendation/index"))
 const NewProductRecommendation = lazy(() => import("@/view/marketing-module/new-product-recommendation/index"))
@@ -244,6 +246,16 @@ const router: RouterType[] = [
                 element: lazyLoad(<SecondKill />),
                 meta: {
                     path: ['营销模块', '秒杀活动']
+                }
+            },
+            {
+                path: '/marketing-module/kill-time',
+                label: '秒杀时间段列表',
+                key: '/marketing-module/kill-time',
+                icon: <ThunderboltOutlined />,
+                element: lazyLoad(<KillTime />),
+                meta: {
+                    path: ['营销模块', '秒杀时间段列表']
                 }
             },
             {
