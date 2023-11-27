@@ -1,5 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestConfig, AxiosRequestHeaders, RawAxiosRequestHeaders } from 'axios';
 import { login } from './login';
+import { getCookie, removeCookie } from '@/common/utils';
 
 // 处理  类型“AxiosResponse<any, any>”上不存在属性“errorinfo”。ts(2339) 脑壳疼！关键一步。
 declare module "axios" {
@@ -16,8 +17,8 @@ const instance = axios.create({
     withCredentials: true,
     headers: {
         'Content-Type': 'application/json;charset=UTF-8',
-        'Authorization': localStorage.getItem('token'),
-        "pa-gateway-token": "6c37163d-3473-4795-86ea-427ec49d1199"
+        // 'Authorization': getCookie('loginToken') // document.cookie.split('=')[1] // sessionStorage.getItem('loginToken'),
+        // "pa-gateway-token": "6c37163d-3473-4795-86ea-427ec49d1199"
     }
 });
 
@@ -49,13 +50,22 @@ const responseHandler = (response: AxiosResponse<Response>) => {
         if(body.code !== 200) {
             // 未登录
             if(body.code === 401) {
+                /**
+                 * 删除token 跳到登录页面
+                */
+                removeCookie("loginToken");
+                return;
+                /**
+                 * 无感刷新接口
+                 */
                 if(!isRefreshing) {
                     isRefreshing = true;
                     // 调试刷新 token 的接口
                     return login({username: 'admin', password: 'macro123'}).then(res => {
                         const { token, tokenHead } = res.data;
                         const value = tokenHead + ' ' + token;
-                        localStorage.setItem('token', value);
+                        // sessionStorage.setItem('loginToken', value);
+                        document.cookie = `loginToken=${value}`;
                         // token 刷新后将数组的方法重新执行
                         requests.forEach((cb) => cb(value))
                         requests = [];
@@ -82,10 +92,16 @@ const responseHandler = (response: AxiosResponse<Response>) => {
     }).then(null, errorHandler)
 };
 
+instance.interceptors.request.use(config => {
+    const token = getCookie('loginToken');
+    token && (config.headers.Authorization = token);
+    return config
+})
+
 instance.interceptors.response.use(responseHandler as any, (error: any) => {
-    if(error.response.data?.code === '401') {
-        // window.location.href = ``;
-    }
+    // if(error.response.data?.code === '401') {
+    //     // window.location.href = ``;
+    // }
 });
 
 export const get = <T, P=Record<string, unknown>>(url: string, params?: P, config?: AxiosConfig) => {

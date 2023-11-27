@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import 'dayjs/locale/zh-cn'
@@ -11,9 +11,11 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-    <Router>
-        <ConfigProvider locale={zhCN}>
-            <App />
-        </ConfigProvider>
-    </Router>
+    <Suspense>
+        <Router>
+            <ConfigProvider locale={zhCN}>
+                <App />
+            </ConfigProvider>
+        </Router>
+    </Suspense>
 );

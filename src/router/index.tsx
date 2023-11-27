@@ -24,9 +24,11 @@ import {
     SettingOutlined,
     FileExcelOutlined,
     ImportOutlined,
-    ThunderboltOutlined
+    ThunderboltOutlined,
+    UserSwitchOutlined
 } from '@ant-design/icons';
 import { RouterType } from './type';
+import Login from '@/view/other/login/index';
 
 export const Home = lazy(() => import("@/view/home/index"))
 const ProductManagementList = lazy(() => import("@/view/product-management/product-list/index"))
@@ -82,6 +84,16 @@ const router: RouterType[] = [
     //         path: ['']
     //     }
     // },
+    {
+        path: '/login',
+        label: '登录页',
+        key: '/login',
+        icon: <HomeOutlined />,
+        element: <Login />,
+        meta: {
+            path: ['登录页']
+        }
+    },
     {
         path: '/home',
         label: '首页',
