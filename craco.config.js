@@ -7,11 +7,11 @@ module.exports = {
 	devServer: {
 		proxy: {
 			'/api': {
-			target: 'https://admin-api.macrozheng.com',
-			changeOrigin: true,
-			pathRewrite: {
-				"^/api": ""
-			}
+				target: 'https://admin-api.macrozheng.com',
+				changeOrigin: true,
+				pathRewrite: {
+					"^/api": ""
+				}
 			}
 		}
 	},

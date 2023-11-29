@@ -5,7 +5,7 @@ import 'dayjs/locale/zh-cn'
 import ReactDOM from 'react-dom/client';
 import './index.less';
 import App from './App';
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'; // BrowserRouter
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
