@@ -25,7 +25,9 @@ import {
     FileExcelOutlined,
     ImportOutlined,
     ThunderboltOutlined,
-    UserSwitchOutlined
+    UserSwitchOutlined,
+    RadarChartOutlined,
+    MessageOutlined
 } from '@ant-design/icons';
 import { RouterType } from './type';
 import Login from '@/view/other/login/index';
@@ -62,6 +64,7 @@ const MenuAuthority = lazy(() => import("@/view/authority-module/menu-authority/
 const AssetsAuthority = lazy(() => import("@/view/authority-module/assets-authority/index"))
 const ResourceCategory = lazy(() => import("@/view/authority-module/resource-category/index"))
 
+const Stream = lazy(() => import("@/view/components-module/stream/index"))
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -390,6 +393,28 @@ const router: RouterType[] = [
                 element: lazyLoad(<ResourceCategory />),
                 meta: {
                     path: ['权限模块', '资源分类']
+                }
+            }
+        ]
+    },
+    // 组件模块
+    {
+        path: '/component-module',
+        label: '组件模块',
+        key: '/component-module',
+        icon: <RadarChartOutlined />,
+        meta: {
+            path: ['组件模块']
+        },
+        children: [
+            {
+                path: '/component-module/stream',
+                label: '消息流',
+                key: '/component-module/stream',
+                icon: <MessageOutlined />,
+                element: lazyLoad(<Stream />),
+                meta: {
+                    path: ['组件模块', '消息流']
                 }
             }
         ]

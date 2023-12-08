@@ -1,0 +1,66 @@
+.chatHistory {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #000;
+    padding: 10px;
+}
+
+.history {
+    max-height: 100%;
+    width: 100%;
+    word-wrap: break-word;
+    flex: auto;
+}
+
+.streamItem {
+    margin: 10px 0 0 15px;
+}
+
+.newMsgTip {
+    position: absolute;
+    bottom: 15px;
+    right: 30px;
+    min-width: 100px;
+    padding: 6px 10px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+    background: #e84969;
+}
+
+.fadeEnter {
+    opacity: 0;
+    transform: translateX(100%);
+}
+  
+.fadeEnterActive {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.5s;
+}
+
+.fadeEnterDone {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.5s;
+}
+  
+.fadeExit {
+    opacity: 1;
+    transform: translateX(0);
+}
+  
+.fadeExitActive {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s;
+}
+.fadeExitDone {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.5s;
+}
