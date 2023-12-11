@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { useSelector, useDispatch } from 'react-redux'
+// import { rootSaga, loginAction } from '@/store/sagas';
 import { setCookie } from '@/common/utils';
 import { login } from '@/common/axios/login';
 
@@ -14,6 +16,7 @@ type FieldType = {
 };
 
 const Login: React.FC = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [form] = Form.useForm();
 
