@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
 
 export function useWatch<T>(deps: T, handler: (next: T, prev: T) => void, immediate = false) {
-    let nextRef = useRef<T>();
+    let prevRef = useRef<T>();
     const isImmediate = useRef(true);
   
     useEffect(() => {
         if (isImmediate.current) {
-            handler(nextRef.current as T, deps);
+            handler(deps, prevRef.current as T);
         } else {
             isImmediate.current = true;
         }
         return () => {
-            nextRef.current = deps;
+            prevRef.current = deps;
         };
     }, [deps]);
 }

@@ -17,11 +17,13 @@ const count = 3;
 function Stream() {
     const [commentList, setCommentList] = useState<IComment[]>([]);
     const theStreamRef = useRef<HTMLDivElement & { autoScroll: boolean, newMessageCount: number, scrollToBottom: Function, showList: any[] }>(null);
+    const [showListLength, setShowListLength] = useState(0);
 
     const showTip = useMemo(() => {
         return !theStreamRef.current?.autoScroll && theStreamRef.current?.newMessageCount! > 0;
     }, [theStreamRef.current?.autoScroll, theStreamRef.current?.newMessageCount]);
-    console.log(888, showTip);
+
+    
     
     useEffect(() => {
         let interval: any = null;
@@ -36,7 +38,7 @@ function Stream() {
                 globalId++;
             }
             setCommentList(prev => [...prev, ...data])
-          }, 2000);
+          }, 3000);
         return () => clearInterval(interval);
     }, [])
 
@@ -46,18 +48,24 @@ function Stream() {
         )
     }
 
+    const showListUpdateLength = (index: number) => {
+        setShowListLength(index);
+    }
+    
+
     return (
         <div className={[styles.chatHistory, styles.history].join(" ")}>
             <TheStream 
                 ref={theStreamRef}
-                list={commentList}
+                list={[...commentList]}
                 uniqueKey="id"
                 streamSlot={streamSlot}
+                update={showListUpdateLength}
             />
 
             <CSSTransition
                 in={showTip}
-                timeout={ 500 }
+                timeout={ 400 }
                 classNames={{
                     enter: styles.fadeEnter,
                     enterActive: styles.fadeEnterActive,
@@ -74,7 +82,7 @@ function Stream() {
             
             <h4>
                 Origin: { commentList.length }
-                Shown: { theStreamRef.current?.showList.length || 0 }
+                Shown: { showListLength }
             </h4>
         </div>
     )

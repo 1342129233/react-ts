@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Ref,forwardRef, useImperativeHandle, useRef } from "react";
+import React, { useState, useEffect, Ref,forwardRef, useImperativeHandle, useRef, useMemo } from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { throttle } from 'lodash-es';
 import { useWatch } from '@/common/hooks/useWatch';
@@ -16,38 +16,48 @@ function TheStream(props: Props, ref: Ref<unknown>) {
         hideScrollbar = false, 
         maxCount = 100, 
         autoScrollTimeout = 15 * 1000, 
-        throttleTimeout = 350,
+        throttleTimeout = 200,
         duration = '0.2s',
-        delay = 0,
-        streamSlot
+        delay = 1000,
+        streamSlot,
+        update
     } = props;
     const boxRef = useRef<HTMLDivElement | null>(null);
     const [autoScroll, setAutoScroll] = useState(true); // 判断是否滚动到底部
     const [newMessageCount, setNewMessageCount] = useState(0); // 新消息数
     const [showList, setShowList] = useState<any[]>([]); // 
+    
+    useEffect(() => {
+        update(showList.length)
+    }, [showList.length || 0]);
 
     // 此处使用外置的变量 lastLen 记录上一次的长度 通过对比以获取增量数据
     useWatch<IComment[]>(list, (newVal, prevVal) => {
         if(!newVal) {
             return;
         }
+        // debugger;
         // 外部对进行了截取/清空操作
         if(newVal.length < lastLen) {
             lastLen = newVal.length;
             return;
         }
-
+        
         // 获取增量数据
         const diff = newVal.slice(lastLen);
-
         // 将增量数据推入 bufferList
         if(diff.length) {
             bufferList.push(...diff);
+            for(var i = 0; i < bufferList.length; i++){
+                setTimeout(function(){
+                    pushComment()
+                },i * delay)
+            }
         }
 
         // 从bufferList中取出数据，添加到showList中
         // 后续触发由钩子函数handleAfterEnter触发
-        pushComment();
+        // pushComment();
 
         // 更新浮标
         lastLen = newVal.length;
@@ -82,7 +92,6 @@ function TheStream(props: Props, ref: Ref<unknown>) {
      */
     const pushComment = throttle(
         () => {
-            
             // 如果 throttleTimeout 为 0 则每次都将bufferList中的全部数据推入showList
             // 否则 逐条推入数据
             const data = bufferList.splice(0, props.throttleTimeout === 0 ? bufferList.length : 1);
@@ -96,12 +105,13 @@ function TheStream(props: Props, ref: Ref<unknown>) {
                 setNewMessageCount(prev => prev += data.length);
             }
         },
-        throttleTimeout,
-        {
-            // 限制首次触发
-            leading: false,
-            trailing: true
-        }
+        throttleTimeout
+        // {
+        //     // 是否立即调用
+        //     leading: false,
+        //     // 是否在延迟后调用
+        //     trailing: false
+        // }
     );
 
     /**
@@ -231,7 +241,8 @@ interface Props {
     throttleTimeout?: number; // 间隔多少毫秒推入一条数据
     duration?: string// transition动画持续时间
     delay?: number; // 动画延迟时间
-    streamSlot: Function
+    streamSlot: Function,
+    update: Function
 }
 
 export default forwardRef<HTMLDivElement, Props>(TheStream);
