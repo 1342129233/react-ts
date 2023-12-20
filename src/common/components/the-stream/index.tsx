@@ -48,7 +48,7 @@ function TheStream(props: Props, ref: Ref<unknown>) {
         // 将增量数据推入 bufferList
         if(diff.length) {
             bufferList.push(...diff);
-            for(var i = 0; i < bufferList.length; i++){
+            for(let i = 0; i < bufferList.length; i++){
                 setTimeout(function(){
                     pushComment()
                 },i * delay)

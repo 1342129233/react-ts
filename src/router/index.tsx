@@ -65,6 +65,7 @@ const AssetsAuthority = lazy(() => import("@/view/authority-module/assets-author
 const ResourceCategory = lazy(() => import("@/view/authority-module/resource-category/index"))
 
 const Stream = lazy(() => import("@/view/components-module/stream/index"))
+const SensitiveWordsReplace = lazy(() => import("@/view/components-module/sensitive-words-replace/index"))
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -416,7 +417,18 @@ const router: RouterType[] = [
                 meta: {
                     path: ['组件模块', '消息流']
                 }
+            },
+            {
+                path: '/component-module/sensitive-words-replace',
+                label: '敏感词替换',
+                key: '/component-module/sensitive-words-replace',
+                icon: <MessageOutlined />,
+                element: lazyLoad(<SensitiveWordsReplace />),
+                meta: {
+                    path: ['组件模块', '敏感词替换']
+                }
             }
+            
         ]
     }
 ]
