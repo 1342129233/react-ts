@@ -66,6 +66,7 @@ const ResourceCategory = lazy(() => import("@/view/authority-module/resource-cat
 
 const Stream = lazy(() => import("@/view/components-module/stream/index"))
 const SensitiveWordsReplace = lazy(() => import("@/view/components-module/sensitive-words-replace/index"))
+const CountDown =  lazy(() => import("@/view/components-module/count-down/index"))
 
 
 // 实现懒加载的用Suspense包裹 定义函数
@@ -427,8 +428,17 @@ const router: RouterType[] = [
                 meta: {
                     path: ['组件模块', '敏感词替换']
                 }
+            },
+            {
+                path: '/component-module/count-down',
+                label: '倒计时',
+                key: '/component-module/count-down',
+                icon: <MessageOutlined />,
+                element: lazyLoad(<CountDown />),
+                meta: {
+                    path: ['组件模块', '倒计时']
+                }
             }
-            
         ]
     }
 ]
